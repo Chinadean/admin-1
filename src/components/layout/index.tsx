@@ -7,9 +7,9 @@ import { Sidebar } from './sidebar'
 
 export const Layout: FC = ({ children }) => {
   return (
-    <Flex h='100vh'>
+    <Flex h='100vh' w='full'>
       <Sidebar />
-      <Stack flex={1}>
+      <Stack w='full'>
         <Header />
         <Flex flex={1} flexDir='column' w='full' p={4}>
           {children}

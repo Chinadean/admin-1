@@ -19,6 +19,11 @@ const authSlice = createSlice({
       state.token = token
       localStorage.setItem('auth', JSON.stringify(state))
     },
+    logout: state => {
+      state.token = null
+      state.user = null
+      localStorage.removeItem('auth')
+    },
     checkAuth: state => {
       const item = localStorage.getItem('auth')
       if (item) {
@@ -30,7 +35,7 @@ const authSlice = createSlice({
   },
 })
 
-export const { setCredentials, checkAuth } = authSlice.actions
+export const { setCredentials, checkAuth, logout } = authSlice.actions
 
 export const { reducer: authReducer } = authSlice
 
