@@ -1,7 +1,16 @@
-import { Box, Heading, Spacer, Stack } from '@chakra-ui/react'
+import { Box, Heading, HStack, Spacer, Stack, Text } from '@chakra-ui/react'
+import { MdLogout, MdTranslate } from 'react-icons/md'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { logout, useAppDispatch } from '@store'
+
+const sidebarRoutes = [
+  {
+    path: '/translations',
+    label: 'Translations',
+    icon: MdTranslate,
+  },
+]
 
 export const Sidebar = () => {
   const dispatch = useAppDispatch()
@@ -13,16 +22,20 @@ export const Sidebar = () => {
   }
 
   return (
-    <Stack bg='gray.700' color='white' p={4} h='full' minW={200}>
+    <Stack bg='gray.700' color='white' p={4} h='full' role='group'>
       <Heading size='lg'>Menu</Heading>
 
-      <Box py={2} as={Link} to='/translations' cursor='pointer'>
-        Translations
-      </Box>
+      {sidebarRoutes.map(route => (
+        <HStack key={route.path} py={2} as={Link} to={route.path} cursor='pointer'>
+          <Box as={route.icon} />
+          <Text>{route.label}</Text>
+        </HStack>
+      ))}
       <Spacer />
-      <Box py={2} onClick={onLogout} cursor='pointer'>
-        Logout
-      </Box>
+      <HStack py={2} onClick={onLogout} cursor='pointer'>
+        <Box as={MdLogout} />
+        <Text>Logout</Text>
+      </HStack>
     </Stack>
   )
 }
