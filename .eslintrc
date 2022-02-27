@@ -1,0 +1,69 @@
+{
+  "env": {
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alias": {
+          "map": [
+            ["/@assets", "src/assets"],
+            ["/@components", "src/components"],
+            ["/@hooks", "src/hooks"],
+            ["/@lib", "src/lib"],
+            ["/@pages", "src/pages"],
+            ["/@store", "src/store"],
+            ["/@theme", "src/theme"]
+          ]
+        },
+        "extensions": [".ts", ".tsx", ".json"]
+      }
+    }
+  },
+  "plugins": ["@typescript-eslint", "import", "prettier"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@{assets,components,hooks,lib,pages,store,theme}/**",
+            "group": "internal"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ]
+  }
+}

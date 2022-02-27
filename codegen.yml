@@ -1,0 +1,26 @@
+overwrite: true
+schema: http://localhost:1337/graphql
+documents: 'src/**/*.graphql'
+watchConfig:
+  usePolling: true
+  interval: 1000
+generates:
+  types/generated.d.ts:
+    plugins:
+      - typescript
+    config:
+      maybeValue: T # normally, this would be T | null, but our msw mock returns everything as nullable, so we want to force these as non-nullalbe
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .ts
+      baseTypesPath: ..
+      folder: '../../../__generated__'
+    plugins:
+      - typescript-operations
+      - typescript-rtk-query:
+          importBaseApiFrom: '@store'
+          exportHooks: true
+    config:
+      maybeValue: T # normally, this would be T | null, but our msw mock returns everything as nullable, so we want to force these as non-nullalbe
+

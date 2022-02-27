@@ -1,0 +1,9 @@
+query getHashtagPosts {
+  hashtagPosts {
+    data {
+      attributes {
+        text
+      }
+    }
+  }
+}
