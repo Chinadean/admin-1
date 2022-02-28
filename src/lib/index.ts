@@ -1,2 +1,3 @@
 export * from './hooks/login'
-export * from './hooks/hashtag-post'
+export * from './hooks/getHashtagPosts'
+export * from './hooks/getTranslatedHashtagPosts'

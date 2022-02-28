@@ -1,10 +1,15 @@
 import { Box, Heading, HStack, Spacer, Stack, Text } from '@chakra-ui/react'
-import { MdLogout, MdTranslate } from 'react-icons/md'
+import { MdDashboard, MdLogout, MdTranslate } from 'react-icons/md'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { logout, useAppDispatch } from '@store'
 
 const sidebarRoutes = [
+  {
+    path: '/',
+    label: 'Dashboard',
+    icon: MdDashboard,
+  },
   {
     path: '/translations',
     label: 'Translations',

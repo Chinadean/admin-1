@@ -1,0 +1,22 @@
+query getHashtagPosts($from: I18NLocaleCode, $to: String, $page: Int, $pageSize: Int) {
+  hashtagPosts(
+    locale: $from
+    filters: { or: [{ localizations: { locale: { ne: $to } } }, { localizations: { locale: { null: true } } }] }
+    pagination: { page: $page, pageSize: $pageSize }
+  ) {
+    data {
+      attributes {
+        locale
+        text
+        localizations {
+          data {
+            attributes {
+              locale
+              text
+            }
+          }
+        }
+      }
+    }
+  }
+}

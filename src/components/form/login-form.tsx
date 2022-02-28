@@ -63,6 +63,7 @@ export const LoginForm = () => {
       <FormItem
         id='password'
         label='Password'
+        type='password'
         leftElement={<MdPassword color='gray.200' />}
         errors={errors}
         register={register}

@@ -1,0 +1,21 @@
+query getTranslatedHashtagPosts($locale: I18NLocaleCode) {
+  translated: hashtagPosts(
+    locale: $locale
+    filters: {
+      and: [{ not: { localizations: { locale: { eq: "tr" } } } }, { not: { localizations: { locale: { eq: "nl" } } } }]
+    }
+  ) {
+    meta {
+      pagination {
+        total
+      }
+    }
+  }
+  all: hashtagPosts(locale: $locale) {
+    meta {
+      pagination {
+        total
+      }
+    }
+  }
+}

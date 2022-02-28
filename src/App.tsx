@@ -8,6 +8,8 @@ import { HomePage, LoginPage, NotFoundPage } from '@pages'
 import { useAppDispatch, checkAuth } from '@store'
 import theme from '@theme'
 
+import { TranslationsPage } from './pages/translations'
+
 export const App: React.FC = () => {
   const dispatch = useAppDispatch()
 
@@ -24,6 +26,14 @@ export const App: React.FC = () => {
             element={
               <RequireAuth>
                 <HomePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path='/translations'
+            element={
+              <RequireAuth>
+                <TranslationsPage />
               </RequireAuth>
             }
           />

@@ -9,6 +9,7 @@ generates:
     plugins:
       - typescript
     config:
+      noExport: true
       maybeValue: T # normally, this would be T | null, but our msw mock returns everything as nullable, so we want to force these as non-nullalbe
   src/:
     preset: near-operation-file
@@ -17,10 +18,12 @@ generates:
       baseTypesPath: ..
       folder: '../../../__generated__'
     plugins:
-      - typescript-operations
+      - typescript-operations:
+          skipTypename: true
       - typescript-rtk-query:
           importBaseApiFrom: '@store'
           exportHooks: true
     config:
+      onlyOperationTypes: true
       maybeValue: T # normally, this would be T | null, but our msw mock returns everything as nullable, so we want to force these as non-nullalbe
 

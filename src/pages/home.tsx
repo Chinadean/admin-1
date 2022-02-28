@@ -1,27 +1,46 @@
-import { Box, Text, Spinner, Stack, Heading } from '@chakra-ui/react'
+import { useState } from 'react'
+
+import { Spinner, Stack, Heading, HStack, Select, FormControl, FormLabel } from '@chakra-ui/react'
 
 import { Layout } from '@components'
-import { useGetHashtagPostsQuery } from '@lib'
+import { useGetTranslatedHashtagPostsQuery } from '@lib'
 
 export const HomePage = () => {
-  const { data, isLoading } = useGetHashtagPostsQuery()
+  const [locale, setLocale] = useState<string>('en')
+
+  const [first, second] = ['en', 'nl', 'tr'].filter(l => l !== locale)
+
+  const { data, isLoading } = useGetTranslatedHashtagPostsQuery({ locale, first, second })
   return (
     <Layout>
       {isLoading ? (
         <Spinner />
-      ) : data?.hashtagPosts?.data ? (
-        <Stack p={4}>
-          <Heading>Posts</Heading>
-          {data.hashtagPosts.data.map((post, i) => (
-            <Text key={i}>
-              {i + 1}. {post.attributes?.text}
-            </Text>
-          ))}
-        </Stack>
       ) : (
-        'No data'
+        <Stack>
+          <HStack>
+            <FormControl>
+              <FormLabel>Language</FormLabel>
+              <Select defaultValue={locale} onChange={e => setLocale(e.target.value)}>
+                {['en', 'nl', 'tr'].map(lang => (
+                  <option key={lang} value={lang}>
+                    {lang}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          </HStack>
+          <HStack w='full' spacing={8}>
+            <Stack p={8} shadow='lg' rounded='lg' flex={1} textAlign='center'>
+              <Heading>Translated</Heading>
+              <Heading>{data?.translated}</Heading>
+            </Stack>
+            <Stack p={8} shadow='lg' rounded='lg' flex={1} textAlign='center'>
+              <Heading>All</Heading>
+              <Heading>{data?.total}</Heading>
+            </Stack>
+          </HStack>
+        </Stack>
       )}
-      <Box>Home</Box>
     </Layout>
   )
 }
