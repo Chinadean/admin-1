@@ -1,9 +1,6 @@
-declare type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
-declare type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: T[SubKey] }
-/** All built-in and custom scalars, mapped to their actual values */
-
-declare type Announcement = {
+type Announcement = {
   __typename?: 'Announcement'
+  categories?: CategoryRelationResponseCollection
   content: string
   createdAt?: string
   date: string
@@ -14,37 +11,53 @@ declare type Announcement = {
   localizations?: AnnouncementRelationResponseCollection
   publishedAt?: string
   slug: string
+  tags?: TagRelationResponseCollection
   title: string
   updatedAt?: string
   views?: number
 }
 
-declare type AnnouncementLocalizationsArgs = {
+type AnnouncementCategoriesArgs = {
+  filters?: CategoryFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type AnnouncementLocalizationsArgs = {
   filters?: AnnouncementFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type AnnouncementEntity = {
+type AnnouncementTagsArgs = {
+  filters?: TagFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type AnnouncementEntity = {
   __typename?: 'AnnouncementEntity'
   attributes?: Announcement
   id?: string
 }
 
-declare type AnnouncementEntityResponse = {
+type AnnouncementEntityResponse = {
   __typename?: 'AnnouncementEntityResponse'
   data?: AnnouncementEntity
 }
 
-declare type AnnouncementEntityResponseCollection = {
+type AnnouncementEntityResponseCollection = {
   __typename?: 'AnnouncementEntityResponseCollection'
   data: Array<AnnouncementEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type AnnouncementFiltersInput = {
+type AnnouncementFiltersInput = {
   and?: Array<AnnouncementFiltersInput>
+  categories?: CategoryFiltersInput
   content?: StringFilterInput
   createdAt?: DateTimeFilterInput
   date?: DateTimeFilterInput
@@ -57,12 +70,14 @@ declare type AnnouncementFiltersInput = {
   or?: Array<AnnouncementFiltersInput>
   publishedAt?: DateTimeFilterInput
   slug?: StringFilterInput
+  tags?: TagFiltersInput
   title?: StringFilterInput
   updatedAt?: DateTimeFilterInput
   views?: IntFilterInput
 }
 
-declare type AnnouncementInput = {
+type AnnouncementInput = {
+  categories?: Array<string>
   content?: string
   date?: string
   date_end?: string
@@ -70,145 +85,235 @@ declare type AnnouncementInput = {
   likes?: number
   publishedAt?: string
   slug?: string
+  tags?: Array<string>
   title?: string
   views?: number
 }
 
-declare type AnnouncementRelationResponseCollection = {
+type AnnouncementRelationResponseCollection = {
   __typename?: 'AnnouncementRelationResponseCollection'
   data: Array<AnnouncementEntity>
 }
 
-declare type Application = {
-  __typename?: 'Application'
-  applicant?: UsersPermissionsUserEntityResponse
-  competition?: CompetitionEntityResponse
-  content: string
+type Applicant = {
+  __typename?: 'Applicant'
+  applications?: ApplicationRelationResponseCollection
   createdAt?: string
-  image: UploadFileEntityResponse
-  locale?: string
-  localizations?: ApplicationRelationResponseCollection
+  profile?: ComponentProfileUser
   publishedAt?: string
-  slug: string
-  title: string
   updatedAt?: string
-  votes?: VoteRelationResponseCollection
+  user?: UsersPermissionsUserEntityResponse
 }
 
-declare type ApplicationLocalizationsArgs = {
+type ApplicantApplicationsArgs = {
   filters?: ApplicationFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type ApplicationVotesArgs = {
+type ApplicantEntity = {
+  __typename?: 'ApplicantEntity'
+  attributes?: Applicant
+  id?: string
+}
+
+type ApplicantEntityResponse = {
+  __typename?: 'ApplicantEntityResponse'
+  data?: ApplicantEntity
+}
+
+type ApplicantEntityResponseCollection = {
+  __typename?: 'ApplicantEntityResponseCollection'
+  data: Array<ApplicantEntity>
+  meta: ResponseCollectionMeta
+}
+
+type ApplicantFiltersInput = {
+  and?: Array<ApplicantFiltersInput>
+  applications?: ApplicationFiltersInput
+  createdAt?: DateTimeFilterInput
+  id?: IdFilterInput
+  not?: ApplicantFiltersInput
+  or?: Array<ApplicantFiltersInput>
+  publishedAt?: DateTimeFilterInput
+  updatedAt?: DateTimeFilterInput
+  user?: UsersPermissionsUserFiltersInput
+}
+
+type ApplicantInput = {
+  applications?: Array<string>
+  profile?: ComponentProfileUserInput
+  publishedAt?: string
+  user?: string
+}
+
+type Application = {
+  __typename?: 'Application'
+  applicant?: ApplicantEntityResponse
+  competition?: CompetitionEntityResponse
+  content: string
+  createdAt?: string
+  image: UploadFileEntityResponse
+  juri_votes?: JuriVoteRelationResponseCollection
+  locale?: string
+  localizations?: ApplicationRelationResponseCollection
+  publishedAt?: string
+  slug: string
+  tags?: TagRelationResponseCollection
+  title: string
+  updatedAt?: string
+  votes?: VoteRelationResponseCollection
+}
+
+type ApplicationJuri_VotesArgs = {
+  filters?: JuriVoteFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type ApplicationLocalizationsArgs = {
+  filters?: ApplicationFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type ApplicationTagsArgs = {
+  filters?: TagFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type ApplicationVotesArgs = {
   filters?: VoteFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type ApplicationEntity = {
+type ApplicationEntity = {
   __typename?: 'ApplicationEntity'
   attributes?: Application
   id?: string
 }
 
-declare type ApplicationEntityResponse = {
+type ApplicationEntityResponse = {
   __typename?: 'ApplicationEntityResponse'
   data?: ApplicationEntity
 }
 
-declare type ApplicationEntityResponseCollection = {
+type ApplicationEntityResponseCollection = {
   __typename?: 'ApplicationEntityResponseCollection'
   data: Array<ApplicationEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type ApplicationFiltersInput = {
+type ApplicationFiltersInput = {
   and?: Array<ApplicationFiltersInput>
-  applicant?: UsersPermissionsUserFiltersInput
+  applicant?: ApplicantFiltersInput
   competition?: CompetitionFiltersInput
   content?: StringFilterInput
   createdAt?: DateTimeFilterInput
   id?: IdFilterInput
+  juri_votes?: JuriVoteFiltersInput
   locale?: StringFilterInput
   localizations?: ApplicationFiltersInput
   not?: ApplicationFiltersInput
   or?: Array<ApplicationFiltersInput>
   publishedAt?: DateTimeFilterInput
   slug?: StringFilterInput
+  tags?: TagFiltersInput
   title?: StringFilterInput
   updatedAt?: DateTimeFilterInput
   votes?: VoteFiltersInput
 }
 
-declare type ApplicationInput = {
+type ApplicationInput = {
   applicant?: string
   competition?: string
   content?: string
   image?: string
+  juri_votes?: Array<string>
   publishedAt?: string
   slug?: string
+  tags?: Array<string>
   title?: string
   votes?: Array<string>
 }
 
-declare type ApplicationRelationResponseCollection = {
+type ApplicationRelationResponseCollection = {
   __typename?: 'ApplicationRelationResponseCollection'
   data: Array<ApplicationEntity>
 }
 
-declare type Art = {
+type Art = {
   __typename?: 'Art'
-  categories: string
+  artist?: ArtistEntityResponse
+  categories?: CategoryRelationResponseCollection
   content: string
   createdAt?: string
   images: UploadFileRelationResponseCollection
   likes?: number
   locale?: string
   localizations?: ArtRelationResponseCollection
-  owner?: UsersPermissionsUserEntityResponse
   publishedAt?: string
   slug: string
+  tags?: TagRelationResponseCollection
   title: string
   updatedAt?: string
 }
 
-declare type ArtImagesArgs = {
+type ArtCategoriesArgs = {
+  filters?: CategoryFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type ArtImagesArgs = {
   filters?: UploadFileFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type ArtLocalizationsArgs = {
+type ArtLocalizationsArgs = {
   filters?: ArtFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type ArtEntity = {
+type ArtTagsArgs = {
+  filters?: TagFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type ArtEntity = {
   __typename?: 'ArtEntity'
   attributes?: Art
   id?: string
 }
 
-declare type ArtEntityResponse = {
+type ArtEntityResponse = {
   __typename?: 'ArtEntityResponse'
   data?: ArtEntity
 }
 
-declare type ArtEntityResponseCollection = {
+type ArtEntityResponseCollection = {
   __typename?: 'ArtEntityResponseCollection'
   data: Array<ArtEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type ArtFiltersInput = {
+type ArtFiltersInput = {
   and?: Array<ArtFiltersInput>
-  categories?: StringFilterInput
+  artist?: ArtistFiltersInput
+  categories?: CategoryFiltersInput
   content?: StringFilterInput
   createdAt?: DateTimeFilterInput
   id?: IdFilterInput
@@ -217,32 +322,140 @@ declare type ArtFiltersInput = {
   localizations?: ArtFiltersInput
   not?: ArtFiltersInput
   or?: Array<ArtFiltersInput>
-  owner?: UsersPermissionsUserFiltersInput
   publishedAt?: DateTimeFilterInput
   slug?: StringFilterInput
+  tags?: TagFiltersInput
   title?: StringFilterInput
   updatedAt?: DateTimeFilterInput
 }
 
-declare type ArtInput = {
-  categories?: string
+type ArtInput = {
+  artist?: string
+  categories?: Array<string>
   content?: string
   images?: Array<string>
   likes?: number
-  owner?: string
   publishedAt?: string
   slug?: string
+  tags?: Array<string>
   title?: string
 }
 
-declare type ArtRelationResponseCollection = {
+type ArtRelationResponseCollection = {
   __typename?: 'ArtRelationResponseCollection'
   data: Array<ArtEntity>
 }
 
-declare type Blog = {
+type Artist = {
+  __typename?: 'Artist'
+  arts?: ArtRelationResponseCollection
+  createdAt?: string
+  profile: ComponentProfileUser
+  publishedAt?: string
+  updatedAt?: string
+  user?: UsersPermissionsUserEntityResponse
+}
+
+type ArtistArtsArgs = {
+  filters?: ArtFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type ArtistEntity = {
+  __typename?: 'ArtistEntity'
+  attributes?: Artist
+  id?: string
+}
+
+type ArtistEntityResponse = {
+  __typename?: 'ArtistEntityResponse'
+  data?: ArtistEntity
+}
+
+type ArtistEntityResponseCollection = {
+  __typename?: 'ArtistEntityResponseCollection'
+  data: Array<ArtistEntity>
+  meta: ResponseCollectionMeta
+}
+
+type ArtistFiltersInput = {
+  and?: Array<ArtistFiltersInput>
+  arts?: ArtFiltersInput
+  createdAt?: DateTimeFilterInput
+  id?: IdFilterInput
+  not?: ArtistFiltersInput
+  or?: Array<ArtistFiltersInput>
+  publishedAt?: DateTimeFilterInput
+  updatedAt?: DateTimeFilterInput
+  user?: UsersPermissionsUserFiltersInput
+}
+
+type ArtistInput = {
+  arts?: Array<string>
+  profile?: ComponentProfileUserInput
+  publishedAt?: string
+  user?: string
+}
+
+type Author = {
+  __typename?: 'Author'
+  blogs?: BlogRelationResponseCollection
+  createdAt?: string
+  profile: ComponentProfileUser
+  publishedAt?: string
+  updatedAt?: string
+  user?: UsersPermissionsUserEntityResponse
+}
+
+type AuthorBlogsArgs = {
+  filters?: BlogFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type AuthorEntity = {
+  __typename?: 'AuthorEntity'
+  attributes?: Author
+  id?: string
+}
+
+type AuthorEntityResponse = {
+  __typename?: 'AuthorEntityResponse'
+  data?: AuthorEntity
+}
+
+type AuthorEntityResponseCollection = {
+  __typename?: 'AuthorEntityResponseCollection'
+  data: Array<AuthorEntity>
+  meta: ResponseCollectionMeta
+}
+
+type AuthorFiltersInput = {
+  and?: Array<AuthorFiltersInput>
+  blogs?: BlogFiltersInput
+  createdAt?: DateTimeFilterInput
+  id?: IdFilterInput
+  not?: AuthorFiltersInput
+  or?: Array<AuthorFiltersInput>
+  publishedAt?: DateTimeFilterInput
+  updatedAt?: DateTimeFilterInput
+  user?: UsersPermissionsUserFiltersInput
+}
+
+type AuthorInput = {
+  blogs?: Array<string>
+  profile?: ComponentProfileUserInput
+  publishedAt?: string
+  user?: string
+}
+
+type Blog = {
   __typename?: 'Blog'
-  author?: UsersPermissionsUserEntityResponse
+  author?: AuthorEntityResponse
+  categories?: CategoryRelationResponseCollection
   content: string
   createdAt?: string
   image: UploadFileEntityResponse
@@ -251,38 +464,54 @@ declare type Blog = {
   localizations?: BlogRelationResponseCollection
   publishedAt?: string
   slug: string
+  tags?: TagRelationResponseCollection
   title: string
   updatedAt?: string
   views?: number
 }
 
-declare type BlogLocalizationsArgs = {
+type BlogCategoriesArgs = {
+  filters?: CategoryFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type BlogLocalizationsArgs = {
   filters?: BlogFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type BlogEntity = {
+type BlogTagsArgs = {
+  filters?: TagFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type BlogEntity = {
   __typename?: 'BlogEntity'
   attributes?: Blog
   id?: string
 }
 
-declare type BlogEntityResponse = {
+type BlogEntityResponse = {
   __typename?: 'BlogEntityResponse'
   data?: BlogEntity
 }
 
-declare type BlogEntityResponseCollection = {
+type BlogEntityResponseCollection = {
   __typename?: 'BlogEntityResponseCollection'
   data: Array<BlogEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type BlogFiltersInput = {
+type BlogFiltersInput = {
   and?: Array<BlogFiltersInput>
-  author?: UsersPermissionsUserFiltersInput
+  author?: AuthorFiltersInput
+  categories?: CategoryFiltersInput
   content?: StringFilterInput
   createdAt?: DateTimeFilterInput
   id?: IdFilterInput
@@ -293,28 +522,31 @@ declare type BlogFiltersInput = {
   or?: Array<BlogFiltersInput>
   publishedAt?: DateTimeFilterInput
   slug?: StringFilterInput
+  tags?: TagFiltersInput
   title?: StringFilterInput
   updatedAt?: DateTimeFilterInput
   views?: IntFilterInput
 }
 
-declare type BlogInput = {
+type BlogInput = {
   author?: string
+  categories?: Array<string>
   content?: string
   image?: string
   likes?: number
   publishedAt?: string
   slug?: string
+  tags?: Array<string>
   title?: string
   views?: number
 }
 
-declare type BlogRelationResponseCollection = {
+type BlogRelationResponseCollection = {
   __typename?: 'BlogRelationResponseCollection'
   data: Array<BlogEntity>
 }
 
-declare type BooleanFilterInput = {
+type BooleanFilterInput = {
   and?: Array<boolean>
   between?: Array<boolean>
   contains?: boolean
@@ -337,7 +569,127 @@ declare type BooleanFilterInput = {
   startsWith?: boolean
 }
 
-declare type CommentsComment = {
+type Category = {
+  __typename?: 'Category'
+  announcements?: AnnouncementRelationResponseCollection
+  arts?: ArtRelationResponseCollection
+  blogs?: BlogRelationResponseCollection
+  code?: string
+  competitions?: CompetitionRelationResponseCollection
+  createdAt?: string
+  hashtags?: HashtagRelationResponseCollection
+  label?: string
+  locale?: string
+  localizations?: CategoryRelationResponseCollection
+  mentions?: MentionRelationResponseCollection
+  publishedAt?: string
+  updatedAt?: string
+}
+
+type CategoryAnnouncementsArgs = {
+  filters?: AnnouncementFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type CategoryArtsArgs = {
+  filters?: ArtFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type CategoryBlogsArgs = {
+  filters?: BlogFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type CategoryCompetitionsArgs = {
+  filters?: CompetitionFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type CategoryHashtagsArgs = {
+  filters?: HashtagFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type CategoryLocalizationsArgs = {
+  filters?: CategoryFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type CategoryMentionsArgs = {
+  filters?: MentionFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type CategoryEntity = {
+  __typename?: 'CategoryEntity'
+  attributes?: Category
+  id?: string
+}
+
+type CategoryEntityResponse = {
+  __typename?: 'CategoryEntityResponse'
+  data?: CategoryEntity
+}
+
+type CategoryEntityResponseCollection = {
+  __typename?: 'CategoryEntityResponseCollection'
+  data: Array<CategoryEntity>
+  meta: ResponseCollectionMeta
+}
+
+type CategoryFiltersInput = {
+  and?: Array<CategoryFiltersInput>
+  announcements?: AnnouncementFiltersInput
+  arts?: ArtFiltersInput
+  blogs?: BlogFiltersInput
+  code?: StringFilterInput
+  competitions?: CompetitionFiltersInput
+  createdAt?: DateTimeFilterInput
+  hashtags?: HashtagFiltersInput
+  id?: IdFilterInput
+  label?: StringFilterInput
+  locale?: StringFilterInput
+  localizations?: CategoryFiltersInput
+  mentions?: MentionFiltersInput
+  not?: CategoryFiltersInput
+  or?: Array<CategoryFiltersInput>
+  publishedAt?: DateTimeFilterInput
+  updatedAt?: DateTimeFilterInput
+}
+
+type CategoryInput = {
+  announcements?: Array<string>
+  arts?: Array<string>
+  blogs?: Array<string>
+  code?: string
+  competitions?: Array<string>
+  hashtags?: Array<string>
+  label?: string
+  mentions?: Array<string>
+  publishedAt?: string
+}
+
+type CategoryRelationResponseCollection = {
+  __typename?: 'CategoryRelationResponseCollection'
+  data: Array<CategoryEntity>
+}
+
+type CommentsComment = {
   __typename?: 'CommentsComment'
   approvalStatus?: string
   authorAvatar?: string
@@ -357,30 +709,30 @@ declare type CommentsComment = {
   updatedAt?: string
 }
 
-declare type CommentsCommentReportsArgs = {
+type CommentsCommentReportsArgs = {
   filters?: CommentsCommentReportFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type CommentsCommentEntity = {
+type CommentsCommentEntity = {
   __typename?: 'CommentsCommentEntity'
   attributes?: CommentsComment
   id?: string
 }
 
-declare type CommentsCommentEntityResponse = {
+type CommentsCommentEntityResponse = {
   __typename?: 'CommentsCommentEntityResponse'
   data?: CommentsCommentEntity
 }
 
-declare type CommentsCommentEntityResponseCollection = {
+type CommentsCommentEntityResponseCollection = {
   __typename?: 'CommentsCommentEntityResponseCollection'
   data: Array<CommentsCommentEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type CommentsCommentFiltersInput = {
+type CommentsCommentFiltersInput = {
   and?: Array<CommentsCommentFiltersInput>
   approvalStatus?: StringFilterInput
   authorAvatar?: StringFilterInput
@@ -403,7 +755,7 @@ declare type CommentsCommentFiltersInput = {
   updatedAt?: DateTimeFilterInput
 }
 
-declare type CommentsCommentInput = {
+type CommentsCommentInput = {
   approvalStatus?: string
   authorAvatar?: string
   authorEmail?: string
@@ -420,7 +772,7 @@ declare type CommentsCommentInput = {
   threadOf?: string
 }
 
-declare type CommentsCommentReport = {
+type CommentsCommentReport = {
   __typename?: 'CommentsCommentReport'
   content?: string
   createdAt?: string
@@ -430,24 +782,24 @@ declare type CommentsCommentReport = {
   updatedAt?: string
 }
 
-declare type CommentsCommentReportEntity = {
+type CommentsCommentReportEntity = {
   __typename?: 'CommentsCommentReportEntity'
   attributes?: CommentsCommentReport
   id?: string
 }
 
-declare type CommentsCommentReportEntityResponse = {
+type CommentsCommentReportEntityResponse = {
   __typename?: 'CommentsCommentReportEntityResponse'
   data?: CommentsCommentReportEntity
 }
 
-declare type CommentsCommentReportEntityResponseCollection = {
+type CommentsCommentReportEntityResponseCollection = {
   __typename?: 'CommentsCommentReportEntityResponseCollection'
   data: Array<CommentsCommentReportEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type CommentsCommentReportFiltersInput = {
+type CommentsCommentReportFiltersInput = {
   and?: Array<CommentsCommentReportFiltersInput>
   content?: StringFilterInput
   createdAt?: DateTimeFilterInput
@@ -460,21 +812,22 @@ declare type CommentsCommentReportFiltersInput = {
   updatedAt?: DateTimeFilterInput
 }
 
-declare type CommentsCommentReportInput = {
+type CommentsCommentReportInput = {
   content?: string
   reason?: Enum_Commentscommentreport_Reason
   related?: string
   resolved?: boolean
 }
 
-declare type CommentsCommentReportRelationResponseCollection = {
+type CommentsCommentReportRelationResponseCollection = {
   __typename?: 'CommentsCommentReportRelationResponseCollection'
   data: Array<CommentsCommentReportEntity>
 }
 
-declare type Competition = {
+type Competition = {
   __typename?: 'Competition'
   applications?: ApplicationRelationResponseCollection
+  categories?: CategoryRelationResponseCollection
   content: string
   createdAt?: string
   date: string
@@ -488,40 +841,48 @@ declare type Competition = {
   updatedAt?: string
 }
 
-declare type CompetitionApplicationsArgs = {
+type CompetitionApplicationsArgs = {
   filters?: ApplicationFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type CompetitionLocalizationsArgs = {
+type CompetitionCategoriesArgs = {
+  filters?: CategoryFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type CompetitionLocalizationsArgs = {
   filters?: CompetitionFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type CompetitionEntity = {
+type CompetitionEntity = {
   __typename?: 'CompetitionEntity'
   attributes?: Competition
   id?: string
 }
 
-declare type CompetitionEntityResponse = {
+type CompetitionEntityResponse = {
   __typename?: 'CompetitionEntityResponse'
   data?: CompetitionEntity
 }
 
-declare type CompetitionEntityResponseCollection = {
+type CompetitionEntityResponseCollection = {
   __typename?: 'CompetitionEntityResponseCollection'
   data: Array<CompetitionEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type CompetitionFiltersInput = {
+type CompetitionFiltersInput = {
   and?: Array<CompetitionFiltersInput>
   applications?: ApplicationFiltersInput
+  categories?: CategoryFiltersInput
   content?: StringFilterInput
   createdAt?: DateTimeFilterInput
   date?: DateTimeFilterInput
@@ -537,8 +898,9 @@ declare type CompetitionFiltersInput = {
   updatedAt?: DateTimeFilterInput
 }
 
-declare type CompetitionInput = {
+type CompetitionInput = {
   applications?: Array<string>
+  categories?: Array<string>
   content?: string
   date?: string
   date_end?: string
@@ -548,12 +910,37 @@ declare type CompetitionInput = {
   title?: string
 }
 
-declare type CompetitionRelationResponseCollection = {
+type CompetitionRelationResponseCollection = {
   __typename?: 'CompetitionRelationResponseCollection'
   data: Array<CompetitionEntity>
 }
 
-declare type DateTimeFilterInput = {
+type ComponentProfileUser = {
+  __typename?: 'ComponentProfileUser'
+  approved?: boolean
+  bio?: string
+  facebook?: string
+  id: string
+  inMailingList?: boolean
+  instagram?: string
+  linkedin?: string
+  name: string
+  twitter?: string
+}
+
+type ComponentProfileUserInput = {
+  approved?: boolean
+  bio?: string
+  facebook?: string
+  id?: string
+  inMailingList?: boolean
+  instagram?: string
+  linkedin?: string
+  name?: string
+  twitter?: string
+}
+
+type DateTimeFilterInput = {
   and?: Array<string>
   between?: Array<string>
   contains?: string
@@ -582,22 +969,260 @@ declare enum Enum_Commentscommentreport_Reason {
   Other = 'OTHER',
 }
 
-declare enum Enum_Translationpost_Role {
-  EnNl = 'en_nl',
-  EnTr = 'en_tr',
-  NlEn = 'nl_en',
-  NlTr = 'nl_tr',
-  TrEn = 'tr_en',
-  TrNl = 'tr_nl',
+declare enum Enum_Volunteer_Country {
+  Ad = 'AD',
+  Ae = 'AE',
+  Af = 'AF',
+  Ag = 'AG',
+  Ai = 'AI',
+  Al = 'AL',
+  Am = 'AM',
+  An = 'AN',
+  Ao = 'AO',
+  Aq = 'AQ',
+  Ar = 'AR',
+  As = 'AS',
+  At = 'AT',
+  Au = 'AU',
+  Aw = 'AW',
+  Ax = 'AX',
+  Az = 'AZ',
+  Ba = 'BA',
+  Bb = 'BB',
+  Bd = 'BD',
+  Be = 'BE',
+  Bf = 'BF',
+  Bg = 'BG',
+  Bh = 'BH',
+  Bi = 'BI',
+  Bj = 'BJ',
+  Bm = 'BM',
+  Bn = 'BN',
+  Bo = 'BO',
+  Br = 'BR',
+  Bs = 'BS',
+  Bt = 'BT',
+  Bv = 'BV',
+  Bw = 'BW',
+  By = 'BY',
+  Bz = 'BZ',
+  Ca = 'CA',
+  Cc = 'CC',
+  Cd = 'CD',
+  Cf = 'CF',
+  Cg = 'CG',
+  Ch = 'CH',
+  Ci = 'CI',
+  Ck = 'CK',
+  Cl = 'CL',
+  Cm = 'CM',
+  Cn = 'CN',
+  Co = 'CO',
+  Cr = 'CR',
+  Cu = 'CU',
+  Cv = 'CV',
+  Cx = 'CX',
+  Cy = 'CY',
+  Cz = 'CZ',
+  De = 'DE',
+  Dj = 'DJ',
+  Dk = 'DK',
+  Dm = 'DM',
+  Do = 'DO',
+  Dz = 'DZ',
+  Ec = 'EC',
+  Ee = 'EE',
+  Eg = 'EG',
+  Eh = 'EH',
+  Er = 'ER',
+  Es = 'ES',
+  Et = 'ET',
+  Fi = 'FI',
+  Fj = 'FJ',
+  Fk = 'FK',
+  Fm = 'FM',
+  Fo = 'FO',
+  Fr = 'FR',
+  Ga = 'GA',
+  Gb = 'GB',
+  Gd = 'GD',
+  Ge = 'GE',
+  Gf = 'GF',
+  Gg = 'GG',
+  Gh = 'GH',
+  Gi = 'GI',
+  Gl = 'GL',
+  Gm = 'GM',
+  Gn = 'GN',
+  Gp = 'GP',
+  Gq = 'GQ',
+  Gr = 'GR',
+  Gs = 'GS',
+  Gt = 'GT',
+  Gu = 'GU',
+  Gw = 'GW',
+  Gy = 'GY',
+  Hk = 'HK',
+  Hm = 'HM',
+  Hn = 'HN',
+  Hr = 'HR',
+  Ht = 'HT',
+  Hu = 'HU',
+  Id = 'ID',
+  Ie = 'IE',
+  Il = 'IL',
+  Im = 'IM',
+  In = 'IN',
+  Io = 'IO',
+  Iq = 'IQ',
+  Ir = 'IR',
+  Is = 'IS',
+  It = 'IT',
+  Je = 'JE',
+  Jm = 'JM',
+  Jo = 'JO',
+  Jp = 'JP',
+  Ke = 'KE',
+  Kg = 'KG',
+  Kh = 'KH',
+  Ki = 'KI',
+  Km = 'KM',
+  Kn = 'KN',
+  Kp = 'KP',
+  Kr = 'KR',
+  Kw = 'KW',
+  Ky = 'KY',
+  Kz = 'KZ',
+  La = 'LA',
+  Lb = 'LB',
+  Lc = 'LC',
+  Li = 'LI',
+  Lk = 'LK',
+  Lr = 'LR',
+  Ls = 'LS',
+  Lt = 'LT',
+  Lu = 'LU',
+  Lv = 'LV',
+  Ly = 'LY',
+  Ma = 'MA',
+  Mc = 'MC',
+  Md = 'MD',
+  Me = 'ME',
+  Mg = 'MG',
+  Mh = 'MH',
+  Mk = 'MK',
+  Ml = 'ML',
+  Mm = 'MM',
+  Mn = 'MN',
+  Mo = 'MO',
+  Mp = 'MP',
+  Mq = 'MQ',
+  Mr = 'MR',
+  Ms = 'MS',
+  Mt = 'MT',
+  Mu = 'MU',
+  Mv = 'MV',
+  Mw = 'MW',
+  Mx = 'MX',
+  My = 'MY',
+  Mz = 'MZ',
+  Na = 'NA',
+  Nc = 'NC',
+  Ne = 'NE',
+  Nf = 'NF',
+  Ng = 'NG',
+  Ni = 'NI',
+  Nl = 'NL',
+  No = 'NO',
+  Np = 'NP',
+  Nr = 'NR',
+  Nu = 'NU',
+  Nz = 'NZ',
+  Om = 'OM',
+  Pa = 'PA',
+  Pe = 'PE',
+  Pf = 'PF',
+  Pg = 'PG',
+  Ph = 'PH',
+  Pk = 'PK',
+  Pl = 'PL',
+  Pm = 'PM',
+  Pn = 'PN',
+  Pr = 'PR',
+  Ps = 'PS',
+  Pt = 'PT',
+  Pw = 'PW',
+  Py = 'PY',
+  Qa = 'QA',
+  Re = 'RE',
+  Ro = 'RO',
+  Rs = 'RS',
+  Ru = 'RU',
+  Rw = 'RW',
+  Sa = 'SA',
+  Sb = 'SB',
+  Sc = 'SC',
+  Sd = 'SD',
+  Se = 'SE',
+  Sg = 'SG',
+  Sh = 'SH',
+  Si = 'SI',
+  Sj = 'SJ',
+  Sk = 'SK',
+  Sl = 'SL',
+  Sm = 'SM',
+  Sn = 'SN',
+  So = 'SO',
+  Sr = 'SR',
+  St = 'ST',
+  Sv = 'SV',
+  Sy = 'SY',
+  Sz = 'SZ',
+  Tc = 'TC',
+  Td = 'TD',
+  Tf = 'TF',
+  Tg = 'TG',
+  Th = 'TH',
+  Tj = 'TJ',
+  Tk = 'TK',
+  Tl = 'TL',
+  Tm = 'TM',
+  Tn = 'TN',
+  To = 'TO',
+  Tr = 'TR',
+  Tt = 'TT',
+  Tv = 'TV',
+  Tw = 'TW',
+  Tz = 'TZ',
+  Ua = 'UA',
+  Ug = 'UG',
+  Um = 'UM',
+  Us = 'US',
+  Uy = 'UY',
+  Uz = 'UZ',
+  Va = 'VA',
+  Vc = 'VC',
+  Ve = 'VE',
+  Vg = 'VG',
+  Vi = 'VI',
+  Vn = 'VN',
+  Vu = 'VU',
+  Wf = 'WF',
+  Ws = 'WS',
+  Ye = 'YE',
+  Yt = 'YT',
+  Za = 'ZA',
+  Zm = 'ZM',
+  Zw = 'ZW',
 }
 
-declare type FileInfoInput = {
+type FileInfoInput = {
   alternativeText?: string
   caption?: string
   name?: string
 }
 
-declare type FloatFilterInput = {
+type FloatFilterInput = {
   and?: Array<number>
   between?: Array<number>
   contains?: number
@@ -620,30 +1245,40 @@ declare type FloatFilterInput = {
   startsWith?: number
 }
 
-declare type GenericMorph =
+type GenericMorph =
   | Announcement
+  | Applicant
   | Application
   | Art
+  | Artist
+  | Author
   | Blog
+  | Category
   | CommentsComment
   | CommentsCommentReport
   | Competition
+  | ComponentProfileUser
   | Hashtag
   | HashtagPost
   | I18NLocale
+  | Juri
+  | JuriVote
   | Mention
   | Privacy
+  | Tag
   | Term
-  | TranslationPost
+  | Translator
   | Trend
   | UploadFile
   | UsersPermissionsPermission
   | UsersPermissionsRole
   | UsersPermissionsUser
+  | Volunteer
   | Vote
 
-declare type Hashtag = {
+type Hashtag = {
   __typename?: 'Hashtag'
+  categories?: CategoryRelationResponseCollection
   content: string
   createdAt?: string
   date: string
@@ -656,43 +1291,51 @@ declare type Hashtag = {
   publishedAt?: string
   slug: string
   title: string
-  tweets?: any
+  tweets?: TimelineTweet[]
   updatedAt?: string
 }
 
-declare type HashtagLocalizationsArgs = {
+type HashtagCategoriesArgs = {
+  filters?: CategoryFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type HashtagLocalizationsArgs = {
   filters?: HashtagFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type HashtagPostsArgs = {
+type HashtagPostsArgs = {
   filters?: HashtagPostFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type HashtagEntity = {
+type HashtagEntity = {
   __typename?: 'HashtagEntity'
   attributes?: Hashtag
   id?: string
 }
 
-declare type HashtagEntityResponse = {
+type HashtagEntityResponse = {
   __typename?: 'HashtagEntityResponse'
   data?: HashtagEntity
 }
 
-declare type HashtagEntityResponseCollection = {
+type HashtagEntityResponseCollection = {
   __typename?: 'HashtagEntityResponseCollection'
   data: Array<HashtagEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type HashtagFiltersInput = {
+type HashtagFiltersInput = {
   and?: Array<HashtagFiltersInput>
+  categories?: CategoryFiltersInput
   content?: StringFilterInput
   createdAt?: DateTimeFilterInput
   date?: DateTimeFilterInput
@@ -711,7 +1354,8 @@ declare type HashtagFiltersInput = {
   updatedAt?: DateTimeFilterInput
 }
 
-declare type HashtagInput = {
+type HashtagInput = {
+  categories?: Array<string>
   content?: string
   date?: string
   hashtag?: string
@@ -721,58 +1365,61 @@ declare type HashtagInput = {
   publishedAt?: string
   slug?: string
   title?: string
-  tweets?: any
+  tweets?: TimelineTweet[]
 }
 
-declare type HashtagPost = {
+type HashtagPost = {
   __typename?: 'HashtagPost'
   createdAt?: string
+  creator?: UsersPermissionsUserEntityResponse
   hashtag?: HashtagEntityResponse
-  image: UploadFileEntityResponse
+  image?: UploadFileEntityResponse
   locale?: string
   localizations?: HashtagPostRelationResponseCollection
   publishedAt?: string
   slug: string
+  tags?: TagRelationResponseCollection
   text: string
-  translations?: TranslationPostRelationResponseCollection
+  translator?: TranslatorEntityResponse
   twitter_image?: string
   updatedAt?: string
 }
 
-declare type HashtagPostLocalizationsArgs = {
+type HashtagPostLocalizationsArgs = {
   filters?: HashtagPostFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type HashtagPostTranslationsArgs = {
-  filters?: TranslationPostFiltersInput
+type HashtagPostTagsArgs = {
+  filters?: TagFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type HashtagPostEntity = {
+type HashtagPostEntity = {
   __typename?: 'HashtagPostEntity'
   attributes?: HashtagPost
   id?: string
 }
 
-declare type HashtagPostEntityResponse = {
+type HashtagPostEntityResponse = {
   __typename?: 'HashtagPostEntityResponse'
   data?: HashtagPostEntity
 }
 
-declare type HashtagPostEntityResponseCollection = {
+type HashtagPostEntityResponseCollection = {
   __typename?: 'HashtagPostEntityResponseCollection'
   data: Array<HashtagPostEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type HashtagPostFiltersInput = {
+type HashtagPostFiltersInput = {
   and?: Array<HashtagPostFiltersInput>
   createdAt?: DateTimeFilterInput
+  creator?: UsersPermissionsUserFiltersInput
   hashtag?: HashtagFiltersInput
   id?: IdFilterInput
   locale?: StringFilterInput
@@ -781,33 +1428,36 @@ declare type HashtagPostFiltersInput = {
   or?: Array<HashtagPostFiltersInput>
   publishedAt?: DateTimeFilterInput
   slug?: StringFilterInput
+  tags?: TagFiltersInput
   text?: StringFilterInput
-  translations?: TranslationPostFiltersInput
+  translator?: TranslatorFiltersInput
   twitter_image?: StringFilterInput
   updatedAt?: DateTimeFilterInput
 }
 
-declare type HashtagPostInput = {
+type HashtagPostInput = {
+  creator?: string
   hashtag?: string
   image?: string
   publishedAt?: string
   slug?: string
+  tags?: Array<string>
   text?: string
-  translations?: Array<string>
+  translator?: string
   twitter_image?: string
 }
 
-declare type HashtagPostRelationResponseCollection = {
+type HashtagPostRelationResponseCollection = {
   __typename?: 'HashtagPostRelationResponseCollection'
   data: Array<HashtagPostEntity>
 }
 
-declare type HashtagRelationResponseCollection = {
+type HashtagRelationResponseCollection = {
   __typename?: 'HashtagRelationResponseCollection'
   data: Array<HashtagEntity>
 }
 
-declare type I18NLocale = {
+type I18NLocale = {
   __typename?: 'I18NLocale'
   code?: string
   createdAt?: string
@@ -815,24 +1465,24 @@ declare type I18NLocale = {
   updatedAt?: string
 }
 
-declare type I18NLocaleEntity = {
+type I18NLocaleEntity = {
   __typename?: 'I18NLocaleEntity'
   attributes?: I18NLocale
   id?: string
 }
 
-declare type I18NLocaleEntityResponse = {
+type I18NLocaleEntityResponse = {
   __typename?: 'I18NLocaleEntityResponse'
   data?: I18NLocaleEntity
 }
 
-declare type I18NLocaleEntityResponseCollection = {
+type I18NLocaleEntityResponseCollection = {
   __typename?: 'I18NLocaleEntityResponseCollection'
   data: Array<I18NLocaleEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type I18NLocaleFiltersInput = {
+type I18NLocaleFiltersInput = {
   and?: Array<I18NLocaleFiltersInput>
   code?: StringFilterInput
   createdAt?: DateTimeFilterInput
@@ -843,7 +1493,7 @@ declare type I18NLocaleFiltersInput = {
   updatedAt?: DateTimeFilterInput
 }
 
-declare type IdFilterInput = {
+type IdFilterInput = {
   and?: Array<string>
   between?: Array<string>
   contains?: string
@@ -866,7 +1516,7 @@ declare type IdFilterInput = {
   startsWith?: string
 }
 
-declare type IntFilterInput = {
+type IntFilterInput = {
   and?: Array<number>
   between?: Array<number>
   contains?: number
@@ -889,7 +1539,7 @@ declare type IntFilterInput = {
   startsWith?: number
 }
 
-declare type JsonFilterInput = {
+type JsonFilterInput = {
   and?: Array<any>
   between?: Array<any>
   contains?: any
@@ -912,9 +1562,114 @@ declare type JsonFilterInput = {
   startsWith?: any
 }
 
-declare type Mention = {
+type Juri = {
+  __typename?: 'Juri'
+  createdAt?: string
+  profile: ComponentProfileUser
+  publishedAt?: string
+  updatedAt?: string
+  user?: UsersPermissionsUserEntityResponse
+  votes?: JuriVoteRelationResponseCollection
+}
+
+type JuriVotesArgs = {
+  filters?: JuriVoteFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type JuriEntity = {
+  __typename?: 'JuriEntity'
+  attributes?: Juri
+  id?: string
+}
+
+type JuriEntityResponse = {
+  __typename?: 'JuriEntityResponse'
+  data?: JuriEntity
+}
+
+type JuriEntityResponseCollection = {
+  __typename?: 'JuriEntityResponseCollection'
+  data: Array<JuriEntity>
+  meta: ResponseCollectionMeta
+}
+
+type JuriFiltersInput = {
+  and?: Array<JuriFiltersInput>
+  createdAt?: DateTimeFilterInput
+  id?: IdFilterInput
+  not?: JuriFiltersInput
+  or?: Array<JuriFiltersInput>
+  publishedAt?: DateTimeFilterInput
+  updatedAt?: DateTimeFilterInput
+  user?: UsersPermissionsUserFiltersInput
+  votes?: JuriVoteFiltersInput
+}
+
+type JuriInput = {
+  profile?: ComponentProfileUserInput
+  publishedAt?: string
+  user?: string
+  votes?: Array<string>
+}
+
+type JuriVote = {
+  __typename?: 'JuriVote'
+  application?: ApplicationEntityResponse
+  createdAt?: string
+  juri?: JuriEntityResponse
+  publishedAt?: string
+  updatedAt?: string
+  value: number
+}
+
+type JuriVoteEntity = {
+  __typename?: 'JuriVoteEntity'
+  attributes?: JuriVote
+  id?: string
+}
+
+type JuriVoteEntityResponse = {
+  __typename?: 'JuriVoteEntityResponse'
+  data?: JuriVoteEntity
+}
+
+type JuriVoteEntityResponseCollection = {
+  __typename?: 'JuriVoteEntityResponseCollection'
+  data: Array<JuriVoteEntity>
+  meta: ResponseCollectionMeta
+}
+
+type JuriVoteFiltersInput = {
+  and?: Array<JuriVoteFiltersInput>
+  application?: ApplicationFiltersInput
+  createdAt?: DateTimeFilterInput
+  id?: IdFilterInput
+  juri?: JuriFiltersInput
+  not?: JuriVoteFiltersInput
+  or?: Array<JuriVoteFiltersInput>
+  publishedAt?: DateTimeFilterInput
+  updatedAt?: DateTimeFilterInput
+  value?: IntFilterInput
+}
+
+type JuriVoteInput = {
+  application?: string
+  juri?: string
+  publishedAt?: string
+  value?: number
+}
+
+type JuriVoteRelationResponseCollection = {
+  __typename?: 'JuriVoteRelationResponseCollection'
+  data: Array<JuriVoteEntity>
+}
+
+type Mention = {
   __typename?: 'Mention'
-  category?: string
+  categories?: CategoryRelationResponseCollection
   createdAt?: string
   data?: any
   locale?: string
@@ -924,33 +1679,40 @@ declare type Mention = {
   username: string
 }
 
-declare type MentionLocalizationsArgs = {
+type MentionCategoriesArgs = {
+  filters?: CategoryFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type MentionLocalizationsArgs = {
   filters?: MentionFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type MentionEntity = {
+type MentionEntity = {
   __typename?: 'MentionEntity'
   attributes?: Mention
   id?: string
 }
 
-declare type MentionEntityResponse = {
+type MentionEntityResponse = {
   __typename?: 'MentionEntityResponse'
   data?: MentionEntity
 }
 
-declare type MentionEntityResponseCollection = {
+type MentionEntityResponseCollection = {
   __typename?: 'MentionEntityResponseCollection'
   data: Array<MentionEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type MentionFiltersInput = {
+type MentionFiltersInput = {
   and?: Array<MentionFiltersInput>
-  category?: StringFilterInput
+  categories?: CategoryFiltersInput
   createdAt?: DateTimeFilterInput
   data?: JsonFilterInput
   id?: IdFilterInput
@@ -963,28 +1725,33 @@ declare type MentionFiltersInput = {
   username?: StringFilterInput
 }
 
-declare type MentionInput = {
-  category?: string
+type MentionInput = {
+  categories?: Array<string>
   data?: any
   publishedAt?: string
   username?: string
 }
 
-declare type MentionRelationResponseCollection = {
+type MentionRelationResponseCollection = {
   __typename?: 'MentionRelationResponseCollection'
   data: Array<MentionEntity>
 }
 
-declare type Mutation = {
+type Mutation = {
   __typename?: 'Mutation'
   createAnnouncement?: AnnouncementEntityResponse
   createAnnouncementLocalization?: AnnouncementEntityResponse
+  createApplicant?: ApplicantEntityResponse
   createApplication?: ApplicationEntityResponse
   createApplicationLocalization?: ApplicationEntityResponse
   createArt?: ArtEntityResponse
   createArtLocalization?: ArtEntityResponse
+  createArtist?: ArtistEntityResponse
+  createAuthor?: AuthorEntityResponse
   createBlog?: BlogEntityResponse
   createBlogLocalization?: BlogEntityResponse
+  createCategory?: CategoryEntityResponse
+  createCategoryLocalization?: CategoryEntityResponse
   createCommentsComment?: CommentsCommentEntityResponse
   createCommentsCommentReport?: CommentsCommentReportEntityResponse
   createCompetition?: CompetitionEntityResponse
@@ -993,36 +1760,49 @@ declare type Mutation = {
   createHashtagLocalization?: HashtagEntityResponse
   createHashtagPost?: HashtagPostEntityResponse
   createHashtagPostLocalization?: HashtagPostEntityResponse
+  createJuri?: JuriEntityResponse
+  createJuriVote?: JuriVoteEntityResponse
   createMention?: MentionEntityResponse
   createMentionLocalization?: MentionEntityResponse
   createPrivacyLocalization?: PrivacyEntityResponse
+  createTag?: TagEntityResponse
+  createTagLocalization?: TagEntityResponse
   createTermLocalization?: TermEntityResponse
-  createTranslationPost?: TranslationPostEntityResponse
+  createTranslator?: TranslatorEntityResponse
   createUploadFile?: UploadFileEntityResponse
   /** Create a new role */
   createUsersPermissionsRole?: UsersPermissionsCreateRolePayload
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse
+  createVolunteer?: VolunteerEntityResponse
   createVote?: VoteEntityResponse
   deleteAnnouncement?: AnnouncementEntityResponse
+  deleteApplicant?: ApplicantEntityResponse
   deleteApplication?: ApplicationEntityResponse
   deleteArt?: ArtEntityResponse
+  deleteArtist?: ArtistEntityResponse
+  deleteAuthor?: AuthorEntityResponse
   deleteBlog?: BlogEntityResponse
+  deleteCategory?: CategoryEntityResponse
   deleteCommentsComment?: CommentsCommentEntityResponse
   deleteCommentsCommentReport?: CommentsCommentReportEntityResponse
   deleteCompetition?: CompetitionEntityResponse
   deleteHashtag?: HashtagEntityResponse
   deleteHashtagPost?: HashtagPostEntityResponse
+  deleteJuri?: JuriEntityResponse
+  deleteJuriVote?: JuriVoteEntityResponse
   deleteMention?: MentionEntityResponse
   deletePrivacy?: PrivacyEntityResponse
+  deleteTag?: TagEntityResponse
   deleteTerm?: TermEntityResponse
-  deleteTranslationPost?: TranslationPostEntityResponse
+  deleteTranslator?: TranslatorEntityResponse
   deleteTrend?: TrendEntityResponse
   deleteUploadFile?: UploadFileEntityResponse
   /** Delete an existing role */
   deleteUsersPermissionsRole?: UsersPermissionsDeleteRolePayload
   /** Update an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse
+  deleteVolunteer?: VolunteerEntityResponse
   deleteVote?: VoteEntityResponse
   /** Confirm an email users email address */
   emailConfirmation?: UsersPermissionsLoginPayload
@@ -1036,369 +1816,499 @@ declare type Mutation = {
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: UsersPermissionsLoginPayload
   updateAnnouncement?: AnnouncementEntityResponse
+  updateApplicant?: ApplicantEntityResponse
   updateApplication?: ApplicationEntityResponse
   updateArt?: ArtEntityResponse
+  updateArtist?: ArtistEntityResponse
+  updateAuthor?: AuthorEntityResponse
   updateBlog?: BlogEntityResponse
+  updateCategory?: CategoryEntityResponse
   updateCommentsComment?: CommentsCommentEntityResponse
   updateCommentsCommentReport?: CommentsCommentReportEntityResponse
   updateCompetition?: CompetitionEntityResponse
   updateFileInfo: UploadFileEntityResponse
   updateHashtag?: HashtagEntityResponse
   updateHashtagPost?: HashtagPostEntityResponse
+  updateJuri?: JuriEntityResponse
+  updateJuriVote?: JuriVoteEntityResponse
   updateMention?: MentionEntityResponse
   updatePrivacy?: PrivacyEntityResponse
+  updateTag?: TagEntityResponse
   updateTerm?: TermEntityResponse
-  updateTranslationPost?: TranslationPostEntityResponse
+  updateTranslator?: TranslatorEntityResponse
   updateTrend?: TrendEntityResponse
   updateUploadFile?: UploadFileEntityResponse
   /** Update an existing role */
   updateUsersPermissionsRole?: UsersPermissionsUpdateRolePayload
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse
+  updateVolunteer?: VolunteerEntityResponse
   updateVote?: VoteEntityResponse
   upload: UploadFileEntityResponse
 }
 
-declare type MutationCreateAnnouncementArgs = {
+type MutationCreateAnnouncementArgs = {
   data: AnnouncementInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateAnnouncementLocalizationArgs = {
+type MutationCreateAnnouncementLocalizationArgs = {
   data?: AnnouncementInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateApplicationArgs = {
+type MutationCreateApplicantArgs = {
+  data: ApplicantInput
+}
+
+type MutationCreateApplicationArgs = {
   data: ApplicationInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateApplicationLocalizationArgs = {
+type MutationCreateApplicationLocalizationArgs = {
   data?: ApplicationInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateArtArgs = {
+type MutationCreateArtArgs = {
   data: ArtInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateArtLocalizationArgs = {
+type MutationCreateArtLocalizationArgs = {
   data?: ArtInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateBlogArgs = {
+type MutationCreateArtistArgs = {
+  data: ArtistInput
+}
+
+type MutationCreateAuthorArgs = {
+  data: AuthorInput
+}
+
+type MutationCreateBlogArgs = {
   data: BlogInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateBlogLocalizationArgs = {
+type MutationCreateBlogLocalizationArgs = {
   data?: BlogInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateCommentsCommentArgs = {
+type MutationCreateCategoryArgs = {
+  data: CategoryInput
+  locale?: I18NLocaleCode
+}
+
+type MutationCreateCategoryLocalizationArgs = {
+  data?: CategoryInput
+  id?: string
+  locale?: I18NLocaleCode
+}
+
+type MutationCreateCommentsCommentArgs = {
   data: CommentsCommentInput
 }
 
-declare type MutationCreateCommentsCommentReportArgs = {
+type MutationCreateCommentsCommentReportArgs = {
   data: CommentsCommentReportInput
 }
 
-declare type MutationCreateCompetitionArgs = {
+type MutationCreateCompetitionArgs = {
   data: CompetitionInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateCompetitionLocalizationArgs = {
+type MutationCreateCompetitionLocalizationArgs = {
   data?: CompetitionInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateHashtagArgs = {
+type MutationCreateHashtagArgs = {
   data: HashtagInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateHashtagLocalizationArgs = {
+type MutationCreateHashtagLocalizationArgs = {
   data?: HashtagInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateHashtagPostArgs = {
+type MutationCreateHashtagPostArgs = {
   data: HashtagPostInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateHashtagPostLocalizationArgs = {
+type MutationCreateHashtagPostLocalizationArgs = {
   data?: HashtagPostInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateMentionArgs = {
+type MutationCreateJuriArgs = {
+  data: JuriInput
+}
+
+type MutationCreateJuriVoteArgs = {
+  data: JuriVoteInput
+}
+
+type MutationCreateMentionArgs = {
   data: MentionInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateMentionLocalizationArgs = {
+type MutationCreateMentionLocalizationArgs = {
   data?: MentionInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreatePrivacyLocalizationArgs = {
+type MutationCreatePrivacyLocalizationArgs = {
   data?: PrivacyInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateTermLocalizationArgs = {
+type MutationCreateTagArgs = {
+  data: TagInput
+  locale?: I18NLocaleCode
+}
+
+type MutationCreateTagLocalizationArgs = {
+  data?: TagInput
+  id?: string
+  locale?: I18NLocaleCode
+}
+
+type MutationCreateTermLocalizationArgs = {
   data?: TermInput
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationCreateTranslationPostArgs = {
-  data: TranslationPostInput
+type MutationCreateTranslatorArgs = {
+  data: TranslatorInput
 }
 
-declare type MutationCreateUploadFileArgs = {
+type MutationCreateUploadFileArgs = {
   data: UploadFileInput
 }
 
-declare type MutationCreateUsersPermissionsRoleArgs = {
+type MutationCreateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput
 }
 
-declare type MutationCreateUsersPermissionsUserArgs = {
+type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput
 }
 
-declare type MutationCreateVoteArgs = {
+type MutationCreateVolunteerArgs = {
+  data: VolunteerInput
+}
+
+type MutationCreateVoteArgs = {
   data: VoteInput
 }
 
-declare type MutationDeleteAnnouncementArgs = {
+type MutationDeleteAnnouncementArgs = {
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationDeleteApplicationArgs = {
-  id: string
-  locale?: any
-}
-
-declare type MutationDeleteArtArgs = {
-  id: string
-  locale?: any
-}
-
-declare type MutationDeleteBlogArgs = {
-  id: string
-  locale?: any
-}
-
-declare type MutationDeleteCommentsCommentArgs = {
+type MutationDeleteApplicantArgs = {
   id: string
 }
 
-declare type MutationDeleteCommentsCommentReportArgs = {
+type MutationDeleteApplicationArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteArtArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteArtistArgs = {
   id: string
 }
 
-declare type MutationDeleteCompetitionArgs = {
-  id: string
-  locale?: any
-}
-
-declare type MutationDeleteHashtagArgs = {
-  id: string
-  locale?: any
-}
-
-declare type MutationDeleteHashtagPostArgs = {
-  id: string
-  locale?: any
-}
-
-declare type MutationDeleteMentionArgs = {
-  id: string
-  locale?: any
-}
-
-declare type MutationDeletePrivacyArgs = {
-  locale?: any
-}
-
-declare type MutationDeleteTermArgs = {
-  locale?: any
-}
-
-declare type MutationDeleteTranslationPostArgs = {
+type MutationDeleteAuthorArgs = {
   id: string
 }
 
-declare type MutationDeleteUploadFileArgs = {
+type MutationDeleteBlogArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteCategoryArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteCommentsCommentArgs = {
   id: string
 }
 
-declare type MutationDeleteUsersPermissionsRoleArgs = {
+type MutationDeleteCommentsCommentReportArgs = {
   id: string
 }
 
-declare type MutationDeleteUsersPermissionsUserArgs = {
+type MutationDeleteCompetitionArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteHashtagArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteHashtagPostArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteJuriArgs = {
   id: string
 }
 
-declare type MutationDeleteVoteArgs = {
+type MutationDeleteJuriVoteArgs = {
   id: string
 }
 
-declare type MutationEmailConfirmationArgs = {
+type MutationDeleteMentionArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeletePrivacyArgs = {
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteTagArgs = {
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteTermArgs = {
+  locale?: I18NLocaleCode
+}
+
+type MutationDeleteTranslatorArgs = {
+  id: string
+}
+
+type MutationDeleteUploadFileArgs = {
+  id: string
+}
+
+type MutationDeleteUsersPermissionsRoleArgs = {
+  id: string
+}
+
+type MutationDeleteUsersPermissionsUserArgs = {
+  id: string
+}
+
+type MutationDeleteVolunteerArgs = {
+  id: string
+}
+
+type MutationDeleteVoteArgs = {
+  id: string
+}
+
+type MutationEmailConfirmationArgs = {
   confirmation: string
 }
 
-declare type MutationForgotPasswordArgs = {
+type MutationForgotPasswordArgs = {
   email: string
 }
 
-declare type MutationLoginArgs = {
+type MutationLoginArgs = {
   input: UsersPermissionsLoginInput
 }
 
-declare type MutationMultipleUploadArgs = {
+type MutationMultipleUploadArgs = {
   field?: string
   files: Array<any>
   ref?: string
   refId?: string
 }
 
-declare type MutationRegisterArgs = {
+type MutationRegisterArgs = {
   input: UsersPermissionsRegisterInput
 }
 
-declare type MutationRemoveFileArgs = {
+type MutationRemoveFileArgs = {
   id: string
 }
 
-declare type MutationResetPasswordArgs = {
+type MutationResetPasswordArgs = {
   code: string
   password: string
   passwordConfirmation: string
 }
 
-declare type MutationUpdateAnnouncementArgs = {
+type MutationUpdateAnnouncementArgs = {
   data: AnnouncementInput
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateApplicationArgs = {
+type MutationUpdateApplicantArgs = {
+  data: ApplicantInput
+  id: string
+}
+
+type MutationUpdateApplicationArgs = {
   data: ApplicationInput
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateArtArgs = {
+type MutationUpdateArtArgs = {
   data: ArtInput
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateBlogArgs = {
+type MutationUpdateArtistArgs = {
+  data: ArtistInput
+  id: string
+}
+
+type MutationUpdateAuthorArgs = {
+  data: AuthorInput
+  id: string
+}
+
+type MutationUpdateBlogArgs = {
   data: BlogInput
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateCommentsCommentArgs = {
+type MutationUpdateCategoryArgs = {
+  data: CategoryInput
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationUpdateCommentsCommentArgs = {
   data: CommentsCommentInput
   id: string
 }
 
-declare type MutationUpdateCommentsCommentReportArgs = {
+type MutationUpdateCommentsCommentReportArgs = {
   data: CommentsCommentReportInput
   id: string
 }
 
-declare type MutationUpdateCompetitionArgs = {
+type MutationUpdateCompetitionArgs = {
   data: CompetitionInput
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateFileInfoArgs = {
+type MutationUpdateFileInfoArgs = {
   id: string
   info?: FileInfoInput
 }
 
-declare type MutationUpdateHashtagArgs = {
+type MutationUpdateHashtagArgs = {
   data: HashtagInput
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateHashtagPostArgs = {
+type MutationUpdateHashtagPostArgs = {
   data: HashtagPostInput
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateMentionArgs = {
+type MutationUpdateJuriArgs = {
+  data: JuriInput
+  id: string
+}
+
+type MutationUpdateJuriVoteArgs = {
+  data: JuriVoteInput
+  id: string
+}
+
+type MutationUpdateMentionArgs = {
   data: MentionInput
   id: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdatePrivacyArgs = {
+type MutationUpdatePrivacyArgs = {
   data: PrivacyInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateTermArgs = {
+type MutationUpdateTagArgs = {
+  data: TagInput
+  id: string
+  locale?: I18NLocaleCode
+}
+
+type MutationUpdateTermArgs = {
   data: TermInput
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type MutationUpdateTranslationPostArgs = {
-  data: TranslationPostInput
+type MutationUpdateTranslatorArgs = {
+  data: TranslatorInput
   id: string
 }
 
-declare type MutationUpdateTrendArgs = {
+type MutationUpdateTrendArgs = {
   data: TrendInput
 }
 
-declare type MutationUpdateUploadFileArgs = {
+type MutationUpdateUploadFileArgs = {
   data: UploadFileInput
   id: string
 }
 
-declare type MutationUpdateUsersPermissionsRoleArgs = {
+type MutationUpdateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput
   id: string
 }
 
-declare type MutationUpdateUsersPermissionsUserArgs = {
+type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput
   id: string
 }
 
-declare type MutationUpdateVoteArgs = {
+type MutationUpdateVolunteerArgs = {
+  data: VolunteerInput
+  id: string
+}
+
+type MutationUpdateVoteArgs = {
   data: VoteInput
   id: string
 }
 
-declare type MutationUploadArgs = {
+type MutationUploadArgs = {
   field?: string
   file: any
   info?: FileInfoInput
@@ -1406,7 +2316,7 @@ declare type MutationUploadArgs = {
   refId?: string
 }
 
-declare type Pagination = {
+type Pagination = {
   __typename?: 'Pagination'
   page: number
   pageCount: number
@@ -1414,14 +2324,14 @@ declare type Pagination = {
   total: number
 }
 
-declare type PaginationArg = {
+type PaginationArg = {
   limit?: number
   page?: number
   pageSize?: number
   start?: number
 }
 
-declare type Privacy = {
+type Privacy = {
   __typename?: 'Privacy'
   content: string
   createdAt?: string
@@ -1434,22 +2344,22 @@ declare type Privacy = {
   updatedAt?: string
 }
 
-declare type PrivacyLocalizationsArgs = {
+type PrivacyLocalizationsArgs = {
   publicationState?: PublicationState
 }
 
-declare type PrivacyEntity = {
+type PrivacyEntity = {
   __typename?: 'PrivacyEntity'
   attributes?: Privacy
   id?: string
 }
 
-declare type PrivacyEntityResponse = {
+type PrivacyEntityResponse = {
   __typename?: 'PrivacyEntityResponse'
   data?: PrivacyEntity
 }
 
-declare type PrivacyInput = {
+type PrivacyInput = {
   content?: string
   image?: string
   publishedAt?: string
@@ -1457,7 +2367,7 @@ declare type PrivacyInput = {
   title?: string
 }
 
-declare type PrivacyRelationResponseCollection = {
+type PrivacyRelationResponseCollection = {
   __typename?: 'PrivacyRelationResponseCollection'
   data: Array<PrivacyEntity>
 }
@@ -1467,16 +2377,24 @@ declare enum PublicationState {
   Preview = 'PREVIEW',
 }
 
-declare type Query = {
+type Query = {
   __typename?: 'Query'
   announcement?: AnnouncementEntityResponse
   announcements?: AnnouncementEntityResponseCollection
+  applicant?: ApplicantEntityResponse
+  applicants?: ApplicantEntityResponseCollection
   application?: ApplicationEntityResponse
   applications?: ApplicationEntityResponseCollection
   art?: ArtEntityResponse
+  artist?: ArtistEntityResponse
+  artists?: ArtistEntityResponseCollection
   arts?: ArtEntityResponseCollection
+  author?: AuthorEntityResponse
+  authors?: AuthorEntityResponseCollection
   blog?: BlogEntityResponse
   blogs?: BlogEntityResponseCollection
+  categories?: CategoryEntityResponseCollection
+  category?: CategoryEntityResponse
   commentsComment?: CommentsCommentEntityResponse
   commentsCommentReport?: CommentsCommentReportEntityResponse
   commentsCommentReports?: CommentsCommentReportEntityResponseCollection
@@ -1489,13 +2407,19 @@ declare type Query = {
   hashtags?: HashtagEntityResponseCollection
   i18NLocale?: I18NLocaleEntityResponse
   i18NLocales?: I18NLocaleEntityResponseCollection
+  juri?: JuriEntityResponse
+  juriVote?: JuriVoteEntityResponse
+  juriVotes?: JuriVoteEntityResponseCollection
+  juris?: JuriEntityResponseCollection
   me?: UsersPermissionsMe
   mention?: MentionEntityResponse
   mentions?: MentionEntityResponseCollection
   privacy?: PrivacyEntityResponse
+  tag?: TagEntityResponse
+  tags?: TagEntityResponseCollection
   term?: TermEntityResponse
-  translationPost?: TranslationPostEntityResponse
-  translationPosts?: TranslationPostEntityResponseCollection
+  translator?: TranslatorEntityResponse
+  translators?: TranslatorEntityResponseCollection
   trend?: TrendEntityResponse
   uploadFile?: UploadFileEntityResponse
   uploadFiles?: UploadFileEntityResponseCollection
@@ -1503,212 +2427,306 @@ declare type Query = {
   usersPermissionsRoles?: UsersPermissionsRoleEntityResponseCollection
   usersPermissionsUser?: UsersPermissionsUserEntityResponse
   usersPermissionsUsers?: UsersPermissionsUserEntityResponseCollection
+  volunteer?: VolunteerEntityResponse
+  volunteers?: VolunteerEntityResponseCollection
   vote?: VoteEntityResponse
   votes?: VoteEntityResponseCollection
 }
 
-declare type QueryAnnouncementArgs = {
+type QueryAnnouncementArgs = {
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type QueryAnnouncementsArgs = {
+type QueryAnnouncementsArgs = {
   filters?: AnnouncementFiltersInput
-  locale?: any
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryApplicationArgs = {
+type QueryApplicantArgs = {
   id?: string
-  locale?: any
 }
 
-declare type QueryApplicationsArgs = {
+type QueryApplicantsArgs = {
+  filters?: ApplicantFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type QueryApplicationArgs = {
+  id?: string
+  locale?: I18NLocaleCode
+}
+
+type QueryApplicationsArgs = {
   filters?: ApplicationFiltersInput
-  locale?: any
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryArtArgs = {
+type QueryArtArgs = {
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type QueryArtsArgs = {
+type QueryArtistArgs = {
+  id?: string
+}
+
+type QueryArtistsArgs = {
+  filters?: ArtistFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type QueryArtsArgs = {
   filters?: ArtFiltersInput
-  locale?: any
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryBlogArgs = {
+type QueryAuthorArgs = {
   id?: string
-  locale?: any
 }
 
-declare type QueryBlogsArgs = {
+type QueryAuthorsArgs = {
+  filters?: AuthorFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type QueryBlogArgs = {
+  id?: string
+  locale?: I18NLocaleCode
+}
+
+type QueryBlogsArgs = {
   filters?: BlogFiltersInput
-  locale?: any
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryCommentsCommentArgs = {
+type QueryCategoriesArgs = {
+  filters?: CategoryFiltersInput
+  locale?: I18NLocaleCode
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type QueryCategoryArgs = {
+  id?: string
+  locale?: I18NLocaleCode
+}
+
+type QueryCommentsCommentArgs = {
   id?: string
 }
 
-declare type QueryCommentsCommentReportArgs = {
+type QueryCommentsCommentReportArgs = {
   id?: string
 }
 
-declare type QueryCommentsCommentReportsArgs = {
+type QueryCommentsCommentReportsArgs = {
   filters?: CommentsCommentReportFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type QueryCommentsCommentsArgs = {
+type QueryCommentsCommentsArgs = {
   filters?: CommentsCommentFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type QueryCompetitionArgs = {
+type QueryCompetitionArgs = {
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type QueryCompetitionsArgs = {
+type QueryCompetitionsArgs = {
   filters?: CompetitionFiltersInput
-  locale?: any
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryHashtagArgs = {
+type QueryHashtagArgs = {
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type QueryHashtagPostArgs = {
+type QueryHashtagPostArgs = {
   id?: string
-  locale?: any
+  locale?: I18NLocaleCode
 }
 
-declare type QueryHashtagPostsArgs = {
+type QueryHashtagPostsArgs = {
   filters?: HashtagPostFiltersInput
-  locale?: any
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryHashtagsArgs = {
+type QueryHashtagsArgs = {
   filters?: HashtagFiltersInput
-  locale?: any
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryI18NLocaleArgs = {
+type QueryI18NLocaleArgs = {
   id?: string
 }
 
-declare type QueryI18NLocalesArgs = {
+type QueryI18NLocalesArgs = {
   filters?: I18NLocaleFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type QueryMentionArgs = {
+type QueryJuriArgs = {
   id?: string
-  locale?: any
 }
 
-declare type QueryMentionsArgs = {
+type QueryJuriVoteArgs = {
+  id?: string
+}
+
+type QueryJuriVotesArgs = {
+  filters?: JuriVoteFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type QueryJurisArgs = {
+  filters?: JuriFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type QueryMentionArgs = {
+  id?: string
+  locale?: I18NLocaleCode
+}
+
+type QueryMentionsArgs = {
   filters?: MentionFiltersInput
-  locale?: any
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryPrivacyArgs = {
-  locale?: any
+type QueryPrivacyArgs = {
+  locale?: I18NLocaleCode
   publicationState?: PublicationState
 }
 
-declare type QueryTermArgs = {
-  locale?: any
-  publicationState?: PublicationState
-}
-
-declare type QueryTranslationPostArgs = {
+type QueryTagArgs = {
   id?: string
+  locale?: I18NLocaleCode
 }
 
-declare type QueryTranslationPostsArgs = {
-  filters?: TranslationPostFiltersInput
+type QueryTagsArgs = {
+  filters?: TagFiltersInput
+  locale?: I18NLocaleCode
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type QueryUploadFileArgs = {
+type QueryTermArgs = {
+  locale?: I18NLocaleCode
+  publicationState?: PublicationState
+}
+
+type QueryTranslatorArgs = {
   id?: string
 }
 
-declare type QueryUploadFilesArgs = {
+type QueryTranslatorsArgs = {
+  filters?: TranslatorFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type QueryUploadFileArgs = {
+  id?: string
+}
+
+type QueryUploadFilesArgs = {
   filters?: UploadFileFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type QueryUsersPermissionsRoleArgs = {
+type QueryUsersPermissionsRoleArgs = {
   id?: string
 }
 
-declare type QueryUsersPermissionsRolesArgs = {
+type QueryUsersPermissionsRolesArgs = {
   filters?: UsersPermissionsRoleFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type QueryUsersPermissionsUserArgs = {
+type QueryUsersPermissionsUserArgs = {
   id?: string
 }
 
-declare type QueryUsersPermissionsUsersArgs = {
+type QueryUsersPermissionsUsersArgs = {
   filters?: UsersPermissionsUserFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type QueryVoteArgs = {
+type QueryVolunteerArgs = {
   id?: string
 }
 
-declare type QueryVotesArgs = {
+type QueryVolunteersArgs = {
+  filters?: VolunteerFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type QueryVoteArgs = {
+  id?: string
+}
+
+type QueryVotesArgs = {
   filters?: VoteFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type ResponseCollectionMeta = {
+type ResponseCollectionMeta = {
   __typename?: 'ResponseCollectionMeta'
   pagination: Pagination
 }
 
-declare type StringFilterInput = {
+type StringFilterInput = {
   and?: Array<string>
   between?: Array<string>
   contains?: string
@@ -1731,7 +2749,117 @@ declare type StringFilterInput = {
   startsWith?: string
 }
 
-declare type Term = {
+type Tag = {
+  __typename?: 'Tag'
+  announcements?: AnnouncementRelationResponseCollection
+  applications?: ApplicationRelationResponseCollection
+  arts?: ArtRelationResponseCollection
+  blogs?: BlogRelationResponseCollection
+  code?: string
+  createdAt?: string
+  hashtag_posts?: HashtagPostRelationResponseCollection
+  label?: string
+  locale?: string
+  localizations?: TagRelationResponseCollection
+  publishedAt?: string
+  updatedAt?: string
+}
+
+type TagAnnouncementsArgs = {
+  filters?: AnnouncementFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type TagApplicationsArgs = {
+  filters?: ApplicationFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type TagArtsArgs = {
+  filters?: ArtFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type TagBlogsArgs = {
+  filters?: BlogFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type TagHashtag_PostsArgs = {
+  filters?: HashtagPostFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type TagLocalizationsArgs = {
+  filters?: TagFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type TagEntity = {
+  __typename?: 'TagEntity'
+  attributes?: Tag
+  id?: string
+}
+
+type TagEntityResponse = {
+  __typename?: 'TagEntityResponse'
+  data?: TagEntity
+}
+
+type TagEntityResponseCollection = {
+  __typename?: 'TagEntityResponseCollection'
+  data: Array<TagEntity>
+  meta: ResponseCollectionMeta
+}
+
+type TagFiltersInput = {
+  and?: Array<TagFiltersInput>
+  announcements?: AnnouncementFiltersInput
+  applications?: ApplicationFiltersInput
+  arts?: ArtFiltersInput
+  blogs?: BlogFiltersInput
+  code?: StringFilterInput
+  createdAt?: DateTimeFilterInput
+  hashtag_posts?: HashtagPostFiltersInput
+  id?: IdFilterInput
+  label?: StringFilterInput
+  locale?: StringFilterInput
+  localizations?: TagFiltersInput
+  not?: TagFiltersInput
+  or?: Array<TagFiltersInput>
+  publishedAt?: DateTimeFilterInput
+  updatedAt?: DateTimeFilterInput
+}
+
+type TagInput = {
+  announcements?: Array<string>
+  applications?: Array<string>
+  arts?: Array<string>
+  blogs?: Array<string>
+  code?: string
+  hashtag_posts?: Array<string>
+  label?: string
+  publishedAt?: string
+}
+
+type TagRelationResponseCollection = {
+  __typename?: 'TagRelationResponseCollection'
+  data: Array<TagEntity>
+}
+
+type Term = {
   __typename?: 'Term'
   content: string
   createdAt?: string
@@ -1744,22 +2872,22 @@ declare type Term = {
   updatedAt?: string
 }
 
-declare type TermLocalizationsArgs = {
+type TermLocalizationsArgs = {
   publicationState?: PublicationState
 }
 
-declare type TermEntity = {
+type TermEntity = {
   __typename?: 'TermEntity'
   attributes?: Term
   id?: string
 }
 
-declare type TermEntityResponse = {
+type TermEntityResponse = {
   __typename?: 'TermEntityResponse'
   data?: TermEntity
 }
 
-declare type TermInput = {
+type TermInput = {
   content?: string
   image?: string
   publishedAt?: string
@@ -1767,96 +2895,94 @@ declare type TermInput = {
   title?: string
 }
 
-declare type TermRelationResponseCollection = {
+type TermRelationResponseCollection = {
   __typename?: 'TermRelationResponseCollection'
   data: Array<TermEntity>
 }
 
-declare type TranslationPost = {
-  __typename?: 'TranslationPost'
+type Translator = {
+  __typename?: 'Translator'
   createdAt?: string
-  has_translated?: boolean
-  post?: HashtagPostEntityResponse
+  languages: string
+  posts?: HashtagPostRelationResponseCollection
+  profile: ComponentProfileUser
   publishedAt?: string
-  role: Enum_Translationpost_Role
-  translation?: string
-  translator?: UsersPermissionsUserEntityResponse
   updatedAt?: string
+  user?: UsersPermissionsUserEntityResponse
 }
 
-declare type TranslationPostEntity = {
-  __typename?: 'TranslationPostEntity'
-  attributes?: TranslationPost
+type TranslatorPostsArgs = {
+  filters?: HashtagPostFiltersInput
+  pagination?: PaginationArg
+  publicationState?: PublicationState
+  sort?: Array<string>
+}
+
+type TranslatorEntity = {
+  __typename?: 'TranslatorEntity'
+  attributes?: Translator
   id?: string
 }
 
-declare type TranslationPostEntityResponse = {
-  __typename?: 'TranslationPostEntityResponse'
-  data?: TranslationPostEntity
+type TranslatorEntityResponse = {
+  __typename?: 'TranslatorEntityResponse'
+  data?: TranslatorEntity
 }
 
-declare type TranslationPostEntityResponseCollection = {
-  __typename?: 'TranslationPostEntityResponseCollection'
-  data: Array<TranslationPostEntity>
+type TranslatorEntityResponseCollection = {
+  __typename?: 'TranslatorEntityResponseCollection'
+  data: Array<TranslatorEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type TranslationPostFiltersInput = {
-  and?: Array<TranslationPostFiltersInput>
+type TranslatorFiltersInput = {
+  and?: Array<TranslatorFiltersInput>
   createdAt?: DateTimeFilterInput
-  has_translated?: BooleanFilterInput
   id?: IdFilterInput
-  not?: TranslationPostFiltersInput
-  or?: Array<TranslationPostFiltersInput>
-  post?: HashtagPostFiltersInput
+  languages?: StringFilterInput
+  not?: TranslatorFiltersInput
+  or?: Array<TranslatorFiltersInput>
+  posts?: HashtagPostFiltersInput
   publishedAt?: DateTimeFilterInput
-  role?: StringFilterInput
-  translation?: StringFilterInput
-  translator?: UsersPermissionsUserFiltersInput
   updatedAt?: DateTimeFilterInput
+  user?: UsersPermissionsUserFiltersInput
 }
 
-declare type TranslationPostInput = {
-  has_translated?: boolean
-  post?: string
+type TranslatorInput = {
+  languages?: string
+  posts?: Array<string>
+  profile?: ComponentProfileUserInput
   publishedAt?: string
-  role?: Enum_Translationpost_Role
-  translation?: string
-  translator?: string
+  user?: string
 }
 
-declare type TranslationPostRelationResponseCollection = {
-  __typename?: 'TranslationPostRelationResponseCollection'
-  data: Array<TranslationPostEntity>
-}
-
-declare type Trend = {
+type Trend = {
   __typename?: 'Trend'
   createdAt?: string
-  en?: any
-  nl?: any
-  tr?: any
+  en?: TrendData[]
+  nl?: TrendData[]
+  tr?: TrendData[]
   updatedAt?: string
 }
 
-declare type TrendEntity = {
+type TrendEntity = {
   __typename?: 'TrendEntity'
   attributes?: Trend
   id?: string
 }
 
-declare type TrendEntityResponse = {
+type TrendEntityResponse = {
   __typename?: 'TrendEntityResponse'
   data?: TrendEntity
 }
 
-declare type TrendInput = {
+type TrendInput = {
   en?: any
   nl?: any
   tr?: any
 }
 
-declare type UploadFile = {
+type UploadFile = {
   __typename?: 'UploadFile'
   alternativeText?: string
   caption?: string
@@ -1877,24 +3003,24 @@ declare type UploadFile = {
   width?: number
 }
 
-declare type UploadFileEntity = {
+type UploadFileEntity = {
   __typename?: 'UploadFileEntity'
   attributes?: UploadFile
   id?: string
 }
 
-declare type UploadFileEntityResponse = {
+type UploadFileEntityResponse = {
   __typename?: 'UploadFileEntityResponse'
   data?: UploadFileEntity
 }
 
-declare type UploadFileEntityResponseCollection = {
+type UploadFileEntityResponseCollection = {
   __typename?: 'UploadFileEntityResponseCollection'
   data: Array<UploadFileEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type UploadFileFiltersInput = {
+type UploadFileFiltersInput = {
   alternativeText?: StringFilterInput
   and?: Array<UploadFileFiltersInput>
   caption?: StringFilterInput
@@ -1917,7 +3043,7 @@ declare type UploadFileFiltersInput = {
   width?: IntFilterInput
 }
 
-declare type UploadFileInput = {
+type UploadFileInput = {
   alternativeText?: string
   caption?: string
   ext?: string
@@ -1934,34 +3060,34 @@ declare type UploadFileInput = {
   width?: number
 }
 
-declare type UploadFileRelationResponseCollection = {
+type UploadFileRelationResponseCollection = {
   __typename?: 'UploadFileRelationResponseCollection'
   data: Array<UploadFileEntity>
 }
 
-declare type UsersPermissionsCreateRolePayload = {
+type UsersPermissionsCreateRolePayload = {
   __typename?: 'UsersPermissionsCreateRolePayload'
   ok: boolean
 }
 
-declare type UsersPermissionsDeleteRolePayload = {
+type UsersPermissionsDeleteRolePayload = {
   __typename?: 'UsersPermissionsDeleteRolePayload'
   ok: boolean
 }
 
-declare type UsersPermissionsLoginInput = {
+type UsersPermissionsLoginInput = {
   identifier: string
   password: string
   provider?: string
 }
 
-declare type UsersPermissionsLoginPayload = {
+type UsersPermissionsLoginPayload = {
   __typename?: 'UsersPermissionsLoginPayload'
   jwt?: string
   user: UsersPermissionsMe
 }
 
-declare type UsersPermissionsMe = {
+type UsersPermissionsMe = {
   __typename?: 'UsersPermissionsMe'
   blocked?: boolean
   confirmed?: boolean
@@ -1971,7 +3097,7 @@ declare type UsersPermissionsMe = {
   username: string
 }
 
-declare type UsersPermissionsMeRole = {
+type UsersPermissionsMeRole = {
   __typename?: 'UsersPermissionsMeRole'
   description?: string
   id: string
@@ -1979,12 +3105,12 @@ declare type UsersPermissionsMeRole = {
   type?: string
 }
 
-declare type UsersPermissionsPasswordPayload = {
+type UsersPermissionsPasswordPayload = {
   __typename?: 'UsersPermissionsPasswordPayload'
   ok: boolean
 }
 
-declare type UsersPermissionsPermission = {
+type UsersPermissionsPermission = {
   __typename?: 'UsersPermissionsPermission'
   action: string
   createdAt?: string
@@ -1992,13 +3118,13 @@ declare type UsersPermissionsPermission = {
   updatedAt?: string
 }
 
-declare type UsersPermissionsPermissionEntity = {
+type UsersPermissionsPermissionEntity = {
   __typename?: 'UsersPermissionsPermissionEntity'
   attributes?: UsersPermissionsPermission
   id?: string
 }
 
-declare type UsersPermissionsPermissionFiltersInput = {
+type UsersPermissionsPermissionFiltersInput = {
   action?: StringFilterInput
   and?: Array<UsersPermissionsPermissionFiltersInput>
   createdAt?: DateTimeFilterInput
@@ -2009,18 +3135,18 @@ declare type UsersPermissionsPermissionFiltersInput = {
   updatedAt?: DateTimeFilterInput
 }
 
-declare type UsersPermissionsPermissionRelationResponseCollection = {
+type UsersPermissionsPermissionRelationResponseCollection = {
   __typename?: 'UsersPermissionsPermissionRelationResponseCollection'
   data: Array<UsersPermissionsPermissionEntity>
 }
 
-declare type UsersPermissionsRegisterInput = {
+type UsersPermissionsRegisterInput = {
   email: string
   password: string
   username: string
 }
 
-declare type UsersPermissionsRole = {
+type UsersPermissionsRole = {
   __typename?: 'UsersPermissionsRole'
   createdAt?: string
   description?: string
@@ -2031,36 +3157,36 @@ declare type UsersPermissionsRole = {
   users?: UsersPermissionsUserRelationResponseCollection
 }
 
-declare type UsersPermissionsRolePermissionsArgs = {
+type UsersPermissionsRolePermissionsArgs = {
   filters?: UsersPermissionsPermissionFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type UsersPermissionsRoleUsersArgs = {
+type UsersPermissionsRoleUsersArgs = {
   filters?: UsersPermissionsUserFiltersInput
   pagination?: PaginationArg
   sort?: Array<string>
 }
 
-declare type UsersPermissionsRoleEntity = {
+type UsersPermissionsRoleEntity = {
   __typename?: 'UsersPermissionsRoleEntity'
   attributes?: UsersPermissionsRole
   id?: string
 }
 
-declare type UsersPermissionsRoleEntityResponse = {
+type UsersPermissionsRoleEntityResponse = {
   __typename?: 'UsersPermissionsRoleEntityResponse'
   data?: UsersPermissionsRoleEntity
 }
 
-declare type UsersPermissionsRoleEntityResponseCollection = {
+type UsersPermissionsRoleEntityResponseCollection = {
   __typename?: 'UsersPermissionsRoleEntityResponseCollection'
   data: Array<UsersPermissionsRoleEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type UsersPermissionsRoleFiltersInput = {
+type UsersPermissionsRoleFiltersInput = {
   and?: Array<UsersPermissionsRoleFiltersInput>
   createdAt?: DateTimeFilterInput
   description?: StringFilterInput
@@ -2074,7 +3200,7 @@ declare type UsersPermissionsRoleFiltersInput = {
   users?: UsersPermissionsUserFiltersInput
 }
 
-declare type UsersPermissionsRoleInput = {
+type UsersPermissionsRoleInput = {
   description?: string
   name?: string
   permissions?: Array<string>
@@ -2082,131 +3208,183 @@ declare type UsersPermissionsRoleInput = {
   users?: Array<string>
 }
 
-declare type UsersPermissionsUpdateRolePayload = {
+type UsersPermissionsUpdateRolePayload = {
   __typename?: 'UsersPermissionsUpdateRolePayload'
   ok: boolean
 }
 
-declare type UsersPermissionsUser = {
+type UsersPermissionsUser = {
   __typename?: 'UsersPermissionsUser'
-  applications?: ApplicationRelationResponseCollection
-  arts?: ArtRelationResponseCollection
+  applicant?: ApplicantEntityResponse
+  artist?: ArtistEntityResponse
+  author?: AuthorEntityResponse
   avatar?: UploadFileEntityResponse
   blocked?: boolean
-  blogs?: BlogRelationResponseCollection
   confirmed?: boolean
   createdAt?: string
+  created_posts?: HashtagPostRelationResponseCollection
   email: string
   fullname?: string
+  juri?: JuriEntityResponse
   provider?: string
   role?: UsersPermissionsRoleEntityResponse
-  translation_posts?: TranslationPostRelationResponseCollection
+  translator?: TranslatorEntityResponse
   updatedAt?: string
   username: string
+  volunteer?: VolunteerEntityResponse
   votes?: VoteRelationResponseCollection
 }
 
-declare type UsersPermissionsUserApplicationsArgs = {
-  filters?: ApplicationFiltersInput
+type UsersPermissionsUserCreated_PostsArgs = {
+  filters?: HashtagPostFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type UsersPermissionsUserArtsArgs = {
-  filters?: ArtFiltersInput
-  pagination?: PaginationArg
-  publicationState?: PublicationState
-  sort?: Array<string>
-}
-
-declare type UsersPermissionsUserBlogsArgs = {
-  filters?: BlogFiltersInput
-  pagination?: PaginationArg
-  publicationState?: PublicationState
-  sort?: Array<string>
-}
-
-declare type UsersPermissionsUserTranslation_PostsArgs = {
-  filters?: TranslationPostFiltersInput
-  pagination?: PaginationArg
-  publicationState?: PublicationState
-  sort?: Array<string>
-}
-
-declare type UsersPermissionsUserVotesArgs = {
+type UsersPermissionsUserVotesArgs = {
   filters?: VoteFiltersInput
   pagination?: PaginationArg
   publicationState?: PublicationState
   sort?: Array<string>
 }
 
-declare type UsersPermissionsUserEntity = {
+type UsersPermissionsUserEntity = {
   __typename?: 'UsersPermissionsUserEntity'
   attributes?: UsersPermissionsUser
   id?: string
 }
 
-declare type UsersPermissionsUserEntityResponse = {
+type UsersPermissionsUserEntityResponse = {
   __typename?: 'UsersPermissionsUserEntityResponse'
   data?: UsersPermissionsUserEntity
 }
 
-declare type UsersPermissionsUserEntityResponseCollection = {
+type UsersPermissionsUserEntityResponseCollection = {
   __typename?: 'UsersPermissionsUserEntityResponseCollection'
   data: Array<UsersPermissionsUserEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type UsersPermissionsUserFiltersInput = {
+type UsersPermissionsUserFiltersInput = {
   and?: Array<UsersPermissionsUserFiltersInput>
-  applications?: ApplicationFiltersInput
-  arts?: ArtFiltersInput
+  applicant?: ApplicantFiltersInput
+  artist?: ArtistFiltersInput
+  author?: AuthorFiltersInput
   blocked?: BooleanFilterInput
-  blogs?: BlogFiltersInput
   confirmationToken?: StringFilterInput
   confirmed?: BooleanFilterInput
   createdAt?: DateTimeFilterInput
+  created_posts?: HashtagPostFiltersInput
   email?: StringFilterInput
   fullname?: StringFilterInput
   id?: IdFilterInput
+  juri?: JuriFiltersInput
   not?: UsersPermissionsUserFiltersInput
   or?: Array<UsersPermissionsUserFiltersInput>
   password?: StringFilterInput
   provider?: StringFilterInput
   resetPasswordToken?: StringFilterInput
   role?: UsersPermissionsRoleFiltersInput
-  translation_posts?: TranslationPostFiltersInput
+  translator?: TranslatorFiltersInput
   updatedAt?: DateTimeFilterInput
   username?: StringFilterInput
+  volunteer?: VolunteerFiltersInput
   votes?: VoteFiltersInput
 }
 
-declare type UsersPermissionsUserInput = {
-  applications?: Array<string>
-  arts?: Array<string>
+type UsersPermissionsUserInput = {
+  applicant?: string
+  artist?: string
+  author?: string
   avatar?: string
   blocked?: boolean
-  blogs?: Array<string>
   confirmationToken?: string
   confirmed?: boolean
+  created_posts?: Array<string>
   email?: string
   fullname?: string
+  juri?: string
   password?: string
   provider?: string
   resetPasswordToken?: string
   role?: string
-  translation_posts?: Array<string>
+  translator?: string
   username?: string
+  volunteer?: string
   votes?: Array<string>
 }
 
-declare type UsersPermissionsUserRelationResponseCollection = {
+type UsersPermissionsUserRelationResponseCollection = {
   __typename?: 'UsersPermissionsUserRelationResponseCollection'
   data: Array<UsersPermissionsUserEntity>
 }
 
-declare type Vote = {
+type Volunteer = {
+  __typename?: 'Volunteer'
+  approved?: boolean
+  availableHours: number
+  comment?: string
+  country?: Enum_Volunteer_Country
+  createdAt?: string
+  hearedFrom?: string
+  phone?: string
+  profile?: ComponentProfileUser
+  public?: boolean
+  publishedAt?: string
+  updatedAt?: string
+  user?: UsersPermissionsUserEntityResponse
+}
+
+type VolunteerEntity = {
+  __typename?: 'VolunteerEntity'
+  attributes?: Volunteer
+  id?: string
+}
+
+type VolunteerEntityResponse = {
+  __typename?: 'VolunteerEntityResponse'
+  data?: VolunteerEntity
+}
+
+type VolunteerEntityResponseCollection = {
+  __typename?: 'VolunteerEntityResponseCollection'
+  data: Array<VolunteerEntity>
+  meta: ResponseCollectionMeta
+}
+
+type VolunteerFiltersInput = {
+  and?: Array<VolunteerFiltersInput>
+  approved?: BooleanFilterInput
+  availableHours?: IntFilterInput
+  comment?: StringFilterInput
+  country?: StringFilterInput
+  createdAt?: DateTimeFilterInput
+  hearedFrom?: StringFilterInput
+  id?: IdFilterInput
+  not?: VolunteerFiltersInput
+  or?: Array<VolunteerFiltersInput>
+  phone?: StringFilterInput
+  public?: BooleanFilterInput
+  publishedAt?: DateTimeFilterInput
+  updatedAt?: DateTimeFilterInput
+  user?: UsersPermissionsUserFiltersInput
+}
+
+type VolunteerInput = {
+  approved?: boolean
+  availableHours?: number
+  comment?: string
+  country?: Enum_Volunteer_Country
+  hearedFrom?: string
+  phone?: string
+  profile?: ComponentProfileUserInput
+  public?: boolean
+  publishedAt?: string
+  user?: string
+}
+
+type Vote = {
   __typename?: 'Vote'
   application?: ApplicationEntityResponse
   createdAt?: string
@@ -2216,24 +3394,24 @@ declare type Vote = {
   voter?: UsersPermissionsUserEntityResponse
 }
 
-declare type VoteEntity = {
+type VoteEntity = {
   __typename?: 'VoteEntity'
   attributes?: Vote
   id?: string
 }
 
-declare type VoteEntityResponse = {
+type VoteEntityResponse = {
   __typename?: 'VoteEntityResponse'
   data?: VoteEntity
 }
 
-declare type VoteEntityResponseCollection = {
+type VoteEntityResponseCollection = {
   __typename?: 'VoteEntityResponseCollection'
   data: Array<VoteEntity>
   meta: ResponseCollectionMeta
 }
 
-declare type VoteFiltersInput = {
+type VoteFiltersInput = {
   and?: Array<VoteFiltersInput>
   application?: ApplicationFiltersInput
   createdAt?: DateTimeFilterInput
@@ -2246,14 +3424,14 @@ declare type VoteFiltersInput = {
   voter?: UsersPermissionsUserFiltersInput
 }
 
-declare type VoteInput = {
+type VoteInput = {
   application?: string
   publishedAt?: string
   value?: number
   voter?: string
 }
 
-declare type VoteRelationResponseCollection = {
+type VoteRelationResponseCollection = {
   __typename?: 'VoteRelationResponseCollection'
   data: Array<VoteEntity>
 }

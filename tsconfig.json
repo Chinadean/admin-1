@@ -26,5 +26,5 @@
       "@store": ["src/store"]
     }
   },
-  "include": ["src", "types/strapi.d.ts"]
+  "include": ["src", "types/*.d.ts"]
 }

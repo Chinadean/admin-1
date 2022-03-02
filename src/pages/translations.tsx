@@ -3,13 +3,16 @@ import { useState } from 'react'
 import { Text, Spinner, Stack, Heading, HStack, Select, FormControl, FormLabel, Wrap, Divider } from '@chakra-ui/react'
 
 import { Layout } from '@components'
-import { useGetHashtagPostsQuery } from '@lib'
+import { useGetUntranslatedHashtagPostsQuery } from '@lib'
+
+const locales = ['en', 'nl', 'tr']
 
 export const TranslationsPage = () => {
   const [from, setFrom] = useState<string>('en')
   const [to, setTo] = useState<string>('tr')
 
-  const { data, isLoading } = useGetHashtagPostsQuery({ page: 1, pageSize: 4, from, to })
+  const { data, isLoading } = useGetUntranslatedHashtagPostsQuery({ page: 1, pageSize: 4, from, to })
+
   return (
     <Layout>
       {isLoading ? (
@@ -40,7 +43,7 @@ export const TranslationsPage = () => {
         <FormControl>
           <FormLabel>From</FormLabel>
           <Select defaultValue={from} onChange={e => setFrom(e.target.value)}>
-            {['en', 'nl', 'tr'].map(lang => (
+            {locales.map(lang => (
               <option key={lang} value={lang}>
                 {lang}
               </option>
@@ -50,13 +53,11 @@ export const TranslationsPage = () => {
         <FormControl>
           <FormLabel>Untranslated</FormLabel>
           <Select defaultValue={to} onChange={e => setTo(e.target.value)}>
-            {['en', 'nl', 'tr']
-              .filter(lang => lang !== from)
-              .map(lang => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
-              ))}
+            {locales.map(lang => (
+              <option key={lang} value={lang}>
+                {lang}
+              </option>
+            ))}
           </Select>
         </FormControl>
       </HStack>

@@ -2,14 +2,14 @@ import { gql } from 'graphql-request'
 
 import { api } from '@store'
 
-export type GetHashtagPostsQueryVariables = {
-  page?: number
-  pageSize?: number
+export type GetUntranslatedHashtagPostsQueryVariables = {
   from?: string
   to?: string
+  page?: number
+  pageSize?: number
 }
 
-export type GetHashtagPostsQuery = {
+export type GetUntranslatedHashtagPostsQuery = {
   hashtagPosts?: {
     data: Array<{
       attributes?: {
@@ -21,8 +21,8 @@ export type GetHashtagPostsQuery = {
   }
 }
 
-export const GetHashtagPostsDocument = gql`
-  query getHashtagPosts($from: I18NLocaleCode, $to: String, $page: Int, $pageSize: Int) {
+export const GetUntranslatedHashtagPostsDocument = gql`
+  query getUntranslatedHashtagPosts($from: I18NLocaleCode, $to: String, $page: Int, $pageSize: Int) {
     hashtagPosts(
       locale: $from
       filters: { or: [{ localizations: { locale: { ne: $to } } }, { localizations: { locale: { null: true } } }] }
@@ -48,13 +48,18 @@ export const GetHashtagPostsDocument = gql`
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: build => ({
-    getHashtagPosts: build.query<GetHashtagPostsQuery, GetHashtagPostsQueryVariables | void>({
-      query: variables => ({ document: GetHashtagPostsDocument, variables }),
-      transformResponse: async (response: GetHashtagPostsQuery, meta, args: GetHashtagPostsQueryVariables) => {
+    getUntranslatedHashtagPosts: build.query<
+      GetUntranslatedHashtagPostsQuery,
+      GetUntranslatedHashtagPostsQueryVariables | void
+    >({
+      query: variables => ({ document: GetUntranslatedHashtagPostsDocument, variables }),
+      transformResponse: async (
+        response: GetUntranslatedHashtagPostsQuery,
+        meta,
+        args: GetUntranslatedHashtagPostsQueryVariables,
+      ) => {
         const result = response.hashtagPosts?.data.filter(post => {
-          const localizations = post.attributes?.localizations as GetHashtagPostsQuery['hashtagPosts']
-
-          return !localizations?.data.some(l => l.attributes?.locale === args.to)
+          return !post.attributes?.localizations?.data.some(l => l.attributes?.locale === args.to)
         }) as HashtagPostEntity[]
 
         return { hashtagPosts: { data: result } }
@@ -63,4 +68,4 @@ const injectedRtkApi = api.injectEndpoints({
   }),
 })
 
-export const { useGetHashtagPostsQuery, useLazyGetHashtagPostsQuery } = injectedRtkApi
+export const { useGetUntranslatedHashtagPostsQuery, useLazyGetUntranslatedHashtagPostsQuery } = injectedRtkApi

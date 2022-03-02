@@ -42,20 +42,8 @@ export const GetTranslatedHashtagPostsDocument = gql`
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: build => ({
-    getTranslatedHashtagPosts: build.query<
-      { translated: number | undefined; total: number | undefined },
-      GetTranslatedHashtagPostsQueryVariables | void
-    >({
+    getTranslatedHashtagPosts: build.query<GetTranslatedHashtagPostsQuery, GetTranslatedHashtagPostsQueryVariables>({
       query: variables => ({ document: GetTranslatedHashtagPostsDocument, variables }),
-      transformResponse: (response: GetTranslatedHashtagPostsQuery) => {
-        const translatedCount = response.translated?.meta.pagination.total
-        const totalCount = response.all?.meta.pagination.total
-
-        return {
-          translated: translatedCount,
-          total: totalCount,
-        }
-      },
     }),
   }),
 })

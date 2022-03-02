@@ -32,11 +32,11 @@ export const HomePage = () => {
           <HStack w='full' spacing={8}>
             <Stack p={8} shadow='lg' rounded='lg' flex={1} textAlign='center'>
               <Heading>Translated</Heading>
-              <Heading>{data?.translated}</Heading>
+              <Heading>{data?.translated?.meta.pagination.total}</Heading>
             </Stack>
             <Stack p={8} shadow='lg' rounded='lg' flex={1} textAlign='center'>
               <Heading>All</Heading>
-              <Heading>{data?.total}</Heading>
+              <Heading>{data?.all?.meta.pagination.total}</Heading>
             </Stack>
           </HStack>
         </Stack>

@@ -1,4 +1,4 @@
-query getHashtagPosts($from: I18NLocaleCode, $to: String, $page: Int, $pageSize: Int) {
+query getUntranslatedHashtagPosts($from: I18NLocaleCode, $to: String, $page: Int, $pageSize: Int) {
   hashtagPosts(
     locale: $from
     filters: { or: [{ localizations: { locale: { ne: $to } } }, { localizations: { locale: { null: true } } }] }
