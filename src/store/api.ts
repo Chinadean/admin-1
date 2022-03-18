@@ -27,7 +27,15 @@ export const baseQuery: BaseQueryFn<
   }
 }
 
+export const TAG_TYPES = {
+  HASHTAG_POST: 'HASHTAG_POST',
+  HASHTAG_POST_TRANSLATED: 'HASHTAG_POST_TRANSLATED',
+  HASHTAG_POST_UNTRANSLATED: 'HASHTAG_POST_UNTRANSLATED',
+  LOGIN: 'LOGIN',
+}
+
 export const api = createApi({
   baseQuery,
+  tagTypes: [TAG_TYPES.HASHTAG_POST],
   endpoints: () => ({}),
 })

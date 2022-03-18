@@ -2,10 +2,10 @@ import { gql } from 'graphql-request'
 
 import { api } from '@store'
 
-export type LoginMutationVariables = {
-  identifier: string
-  password: string
-}
+export type LoginMutationVariables = Exact<{
+  identifier: Scalars['String']
+  password: Scalars['String']
+}>
 
 export type LoginMutation = { login: { jwt?: string; user: { id: string; username: string; email?: string } } }
 

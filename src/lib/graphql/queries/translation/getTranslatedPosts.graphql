@@ -1,5 +1,5 @@
-query getTranslatedHashtagPosts($locale: I18NLocaleCode!, $first: String!, $second: String!) {
-  translated: hashtagPosts(
+query getTranslatedPosts($locale: I18NLocaleCode!, $first: String!, $second: String!) {
+  translated: posts(
     locale: $locale
     filters: {
       and: [
@@ -14,7 +14,7 @@ query getTranslatedHashtagPosts($locale: I18NLocaleCode!, $first: String!, $seco
       }
     }
   }
-  all: hashtagPosts(locale: $locale) {
+  all: posts(locale: $locale) {
     meta {
       pagination {
         total

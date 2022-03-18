@@ -1,5 +1,8 @@
 overwrite: true
-schema: http://localhost:1337/graphql
+schema:
+  - http://localhost:1337/graphql:
+      headers:
+        Authorization: Bearer 951efdc0aa664fc75cfe4ccf3d997d37813d2de5affb54784c3f2a7e107ccbac6e807591ea6110faa29b2388a1884d99ac159ea8e79147143286bab573e664a39e1fa7a889acb3fd1b4010eff4fdefe41fe86921def27bb70eb002dc351601547f714853fbf5aeed78ed4d94f8b95a5258f01034db8201430ae8d2fdb0eb0c50
 documents: 'src/**/*.graphql'
 watchConfig:
   usePolling: true

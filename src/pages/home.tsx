@@ -3,14 +3,14 @@ import { useState } from 'react'
 import { Spinner, Stack, Heading, HStack, Select, FormControl, FormLabel } from '@chakra-ui/react'
 
 import { Layout } from '@components'
-import { useGetTranslatedHashtagPostsQuery } from '@lib'
+import { useGetTranslatedPostsQuery } from '@store'
 
 export const HomePage = () => {
   const [locale, setLocale] = useState<string>('en')
 
   const [first, second] = ['en', 'nl', 'tr'].filter(l => l !== locale)
 
-  const { data, isLoading } = useGetTranslatedHashtagPostsQuery({ locale, first, second })
+  const { data, isLoading } = useGetTranslatedPostsQuery({ locale, first, second })
   return (
     <Layout>
       {isLoading ? (

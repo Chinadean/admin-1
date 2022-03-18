@@ -8,8 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 
 import { FormItem } from '@components'
-import { useLoginMutation } from '@lib'
-import { setCredentials, useAppDispatch } from '@store'
+import { useLoginMutation, setCredentials, useAppDispatch } from '@store'
 
 type FormDataType = {
   identifier: string

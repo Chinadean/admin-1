@@ -4,11 +4,9 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { RequireAuth } from '@components'
-import { HomePage, LoginPage, NotFoundPage } from '@pages'
+import { HomePage, LoginPage, NotFoundPage, PostsPage } from '@pages'
 import { useAppDispatch, checkAuth } from '@store'
 import theme from '@theme'
-
-import { TranslationsPage } from './pages/translations'
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -30,10 +28,10 @@ export const App: React.FC = () => {
             }
           />
           <Route
-            path='/translations'
+            path='/hashtag-posts'
             element={
               <RequireAuth>
-                <TranslationsPage />
+                <PostsPage />
               </RequireAuth>
             }
           />
