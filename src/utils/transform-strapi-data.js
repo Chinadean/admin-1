@@ -33,11 +33,15 @@ export const transformStrapiData = response => {
     return null
   }
 
+  let data
+
   if (response.data && Array.isArray(response.data)) {
-    return response.data.map(({ id, attributes }) => {
+    data = response.data.map(({ id, attributes }) => {
       return transformAttributes(id, attributes)
     })
+  } else {
+    data = transformAttributes(response.data.id, response.data.attributes)
   }
 
-  return transformAttributes(response.data.id, response.data.attributes)
+  return { data, pagination: response.meta.pagination }
 }

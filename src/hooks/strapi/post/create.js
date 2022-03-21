@@ -7,7 +7,7 @@ export const useCreatePostMutation = () => {
 
   return useMutation({
     mutationKey: 'create-post',
-    mutationFn: async data => mutation.post('api/posts', data),
+    mutationFn: data => mutation.post('api/posts', data),
     onSuccess: () => queryClient.invalidateQueries(['posts']),
   })
 }

@@ -11,8 +11,8 @@ export const request = async ({
   filters,
   populate = '*',
   sort,
-  start = 0,
-  limit = 25,
+  page = 1,
+  pageSize = 25,
 }) => {
   const query = qs.stringify(
     {
@@ -22,8 +22,8 @@ export const request = async ({
       filters,
       sort,
       pagination: {
-        start,
-        limit,
+        page,
+        pageSize,
       },
     },
     {
@@ -34,9 +34,13 @@ export const request = async ({
   // TODO Consider a better error handling
   try {
     const response = await instance.get(`/${url}?${query}`)
-    return transformStrapiData(response.data)
+
+    // returns {data: any[], total: number}
+    const transformedData = transformStrapiData(response.data)
+
+    return transformedData
   } catch (error) {
-    console.error(error.data || error.response || error.message)
+    console.error('Request error', error.data || error.response || error.message)
     return null
   }
 }

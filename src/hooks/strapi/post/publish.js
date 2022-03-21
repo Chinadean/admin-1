@@ -7,7 +7,7 @@ export const usePublishPostMutation = () => {
 
   return useMutation({
     mutationKey: 'publish-post',
-    mutationFn: async id => mutation.put('api/posts', id, { data: { publishedAt: new Date() } }),
+    mutationFn: id => mutation.put('api/posts', id, { data: { publishedAt: new Date() } }),
     onSuccess: () => queryClient.invalidateQueries(['posts']),
   })
 }

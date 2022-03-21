@@ -1,6 +1,6 @@
 import { Box, Heading, HStack, Spacer, Stack, Text } from '@chakra-ui/react'
 import { FaHashtag } from 'react-icons/fa'
-import { MdDashboard, MdLogout } from 'react-icons/md'
+import { MdDashboard, MdLogout, MdCode } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -16,6 +16,11 @@ const sidebarRoutes = [
     path: '/hashtag-posts',
     label: 'Hashtag Posts',
     icon: FaHashtag,
+  },
+  {
+    path: '/examples',
+    label: 'Examples',
+    icon: MdCode,
   },
 ]
 
