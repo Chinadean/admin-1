@@ -6,7 +6,7 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { checkAuth } from '../../store'
 
 let parsedItem
-const item = sessionStorage.getItem('auth')
+const item = sessionStorage.getItem('samen-auth')
 if (item) {
   parsedItem = JSON.parse(item)
 }

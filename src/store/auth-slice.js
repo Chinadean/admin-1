@@ -7,15 +7,15 @@ const authSlice = createSlice({
     setCredentials: (state, { payload: { user, token } }) => {
       state.user = user
       state.token = token
-      sessionStorage.setItem('auth', JSON.stringify(state))
+      sessionStorage.setItem('samen-auth', JSON.stringify(state))
     },
     logout: state => {
       state.token = null
       state.user = null
-      sessionStorage.removeItem('auth')
+      sessionStorage.removeItem('samen-auth')
     },
     checkAuth: state => {
-      const item = sessionStorage.getItem('auth')
+      const item = sessionStorage.getItem('samen-auth')
       if (item) {
         const parsedItem = JSON.parse(item)
         state.user = parsedItem.user

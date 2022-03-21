@@ -1,5 +1,4 @@
-import { Box, Spinner, Stack } from '@chakra-ui/react'
-// import { JSONTree } from 'react-json-tree'
+import { Stack } from '@chakra-ui/react'
 
 import { CodeBlock } from '../../components'
 import { useGetVolunteers } from '../../hooks'
@@ -17,13 +16,9 @@ export const useGetVolunteers = () => {
 })
 `.trim()
 
-  if (isLoading) return <Spinner />
-
-  if (isError) return <Box>Error! Check console!</Box>
-
   return (
     <Stack>
-      <CodeBlock code={code} result={data.data} />
+      <CodeBlock code={code} result={data?.data} isLoading={isLoading} isError={isError} />
     </Stack>
   )
 }

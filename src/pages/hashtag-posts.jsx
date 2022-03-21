@@ -5,7 +5,7 @@ import { useGetPosts } from '../hooks'
 
 export const PostsPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { data, isLoading, isFetching } = useGetPosts()
+  const { data, isLoading, isFetching } = useGetPosts({})
 
   return (
     <Layout>

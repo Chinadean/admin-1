@@ -2,7 +2,7 @@ import qs from 'qs'
 
 import { transformStrapiData } from '../../utils'
 
-import { instance } from './instance'
+import { fetcher } from './fetcher'
 
 export const request = async ({
   publicationState = 'live',
@@ -31,15 +31,15 @@ export const request = async ({
     },
   )
 
-  // TODO Consider a better error handling
   try {
-    const response = await instance.get(`/${url}?${query}`)
+    const response = await fetcher(`/${url}?${query}`)
 
     // returns {data: any[], total: number}
     const transformedData = transformStrapiData(response.data)
 
     return transformedData
   } catch (error) {
+    // TODO Consider a better error handling
     console.error('Request error', error.data || error.response || error.message)
     return null
   }

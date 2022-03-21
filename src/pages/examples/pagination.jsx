@@ -6,12 +6,13 @@ import { CodeBlock } from '../../components'
 import { useGetPosts } from '../../hooks'
 
 export const Pagination = () => {
+  // TODO Let users set page size
   const [page, setPage] = useState(1)
   const { data, isLoading, isError } = useGetPosts({ page, pageSize: 10 })
 
   const code = `
-const [page, setPage] = useState(1)
-const { data, isLoading, isError } = useGetPosts({ page, pageSize: 10 })
+const [page, setPage] = useState(${page})
+const { data, isLoading, isError } = useGetPosts({ page: ${page}, pageSize: 10 })
 `.trim()
 
   return (
