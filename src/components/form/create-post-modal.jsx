@@ -14,8 +14,9 @@ import {
   Stack,
 } from '@chakra-ui/react'
 
-import { FileUploader } from './file-uploader'
 import { useCreatePostMutation } from '../../hooks'
+
+import { FileUploader } from './file-uploader'
 
 export const CreatePostModal = ({ isOpen, onClose }) => {
   const [file, setFile] = useState()

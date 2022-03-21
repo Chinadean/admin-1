@@ -1,13 +1,15 @@
 import { useEffect } from 'react'
+
 import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 import { RequireAuth } from './components'
 import { checkAuth } from './store'
 import { HomePage, LoginPage, NotFoundPage, PostsPage } from './pages'
 import { theme } from './theme'
-import { QueryClient, QueryClientProvider } from 'react-query'
 
 const queryClient = new QueryClient()
 
@@ -16,7 +18,7 @@ export const App = () => {
 
   useEffect(() => {
     dispatch(checkAuth())
-  }, [])
+  }, [dispatch])
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -44,6 +46,7 @@ export const App = () => {
           </Routes>
         </BrowserRouter>
       </ChakraProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }

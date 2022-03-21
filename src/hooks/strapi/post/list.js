@@ -1,8 +1,9 @@
 import { useQuery } from 'react-query'
 
-import { request } from '../../lib'
+import { request } from '../../../lib'
 
 export const useGetPosts = () => {
+  // return useQuery('posts', () => request({ ... }))
   return useQuery({
     queryKey: 'posts',
     queryFn: async () => request({ url: 'api/posts', publicationState: 'preview', sort: ['createdAt:desc'] }),

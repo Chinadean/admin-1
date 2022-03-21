@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form'
 import { MdEmail, MdPassword } from 'react-icons/md'
 import * as yup from 'yup'
 
-import { FormItem } from './form-item'
-
 import { useLoginMutation } from '../../hooks'
+
+import { FormItem } from './form-item'
 
 const schema = yup.object({
   identifier: yup.string().required('Username or email is required'),
@@ -32,7 +32,6 @@ export const LoginForm = () => {
   const onSubmit = async credentials => {
     try {
       login(credentials)
-      navigate(from, { replace: true })
     } catch (error) {
       const message = error.response?.errors[0].message
       if (message) setError(message)

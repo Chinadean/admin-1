@@ -18,7 +18,7 @@ export const RequireAuth = ({ children }) => {
 
   useEffect(() => {
     dispatch(checkAuth())
-  }, [token])
+  }, [token, dispatch])
 
   if (!parsedItem?.token && !token) {
     // Redirect them to the /login page, but save the current location they were

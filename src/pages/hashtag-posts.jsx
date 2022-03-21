@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Badge, Box, Button, HStack, SimpleGrid, Stack, Text, useDisclosure } from '@chakra-ui/react'
 
 import { CreatePostModal, Layout } from '../components'
