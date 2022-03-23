@@ -33,8 +33,8 @@ export const App = () => {
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <BrowserRouter>
-          {/* Homepage */}
           <Routes>
+            {/* Homepage */}
             <Route
               path='/'
               element={
